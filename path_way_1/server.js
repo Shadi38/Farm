@@ -2,7 +2,14 @@ const express = require("express")
 const app = express();
 const cors = require("cors");
 // Use CORS middleware
-app.use(cors());
+// app.use(cors());
+app.use(
+  cors({
+    origin: "https://pathway-project-1.onrender.com",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
 app.use(express.json());
 const { body, validationResult } = require("express-validator");
 app.use((req, res, next) => {

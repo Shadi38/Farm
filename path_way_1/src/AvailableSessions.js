@@ -10,7 +10,9 @@ function AvailableSessions() {
   async function loadAvailableSessions() {
     console.log("clicked");
     try {
-      const response = await fetch("http://localhost:3000/sessions");
+      const response = await fetch(
+        "https://pathway-project-1-server.onrender.com/sessions"
+      );
       if (!response.ok) {
         throw new Error("something went wrong");
       }
@@ -28,17 +30,18 @@ function AvailableSessions() {
   function addClickHandeler(e) {
     e.preventDefault();
     const newVolunteer = {name:name,day:day,sessions:sessionData}
-    fetch("http://localhost:3000/sessions/volunteers", {
+    fetch("https://pathway-project-1-server.onrender.com/sessions/volunteers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newVolunteer),
-    }).then((response) => response.json())
-    .then((data)=>{
-      //???????????
-      console.log(data);
     })
+      .then((response) => response.json())
+      .then((data) => {
+        //???????????
+        console.log(data);
+      });
   }
 
   return (
