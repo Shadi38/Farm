@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express();
 const cors = require("cors");
+require('dotenv').config();
 // Use CORS middleware
 // app.use(cors());
 app.use(
@@ -23,12 +24,21 @@ app.use((req, res, next) => {
 const port = process.env.PORT || 3000;
 const { Pool } = require("pg");
 
+// const db = new Pool({
+//   user: "shadifakhri", 
+//   host: "localhost",
+//   database: "database",
+//   password: "",
+//   port: 5432,
+// });
+
 const db = new Pool({
-  user: "shadifakhri", 
-  host: "localhost",
-  database: "database",
-  password: "",
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
+  ssl: false,
 });
 
 app.get('/sessions',async function (req,res) {

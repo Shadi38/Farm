@@ -20,56 +20,44 @@ function App() {
           Our farm needs volunteers to feed animals. You can register in our
           available sessions:
         </p>
+        <div className="linkDiv">
+          <Link
+            to="/Sessions"
+            onClick={() => {
+              setShowSessions(true);
+              setShowAvailableSessions(false); // Hide the other content
+            }}
+            style={{
+              color: "black",
+              marginLeft: 20,
+              textDecoration: "none",
+              fontWeight: "bold",
+            }}
+          >
+            Sessions
+          </Link>
 
-        <Link
-          to="/Sessions"
-          onClick={() => {
-            setShowSessions(true);
-            setShowAvailableSessions(false); // Hide the other content
-          }}
-          style={{
-            color: "black",
-            marginLeft: 20,
-            textDecoration: "none",
-            fontWeight: "bold",
-          }}
-        >
-          Sessions
-        </Link>
-
-        <Link
-          to="/Available_sessions"
-          onClick={() => {
-            setShowAvailableSessions(true);
-            setShowSessions(false);
-          }}
-          style={{
-            color: "black",
-            marginLeft: 20,
-            textDecoration: "none",
-            fontWeight: "bold",
-          }}
-        >
-          Available Sessions
-        </Link>
-
+          <Link
+            to="/Available_sessions"
+            onClick={() => {
+              setShowAvailableSessions(true);
+              setShowSessions(false);
+            }}
+            style={{
+              color: "black",
+              marginLeft: 20,
+              textDecoration: "none",
+              fontWeight: "bold",
+            }}
+          >
+            Available Sessions
+          </Link>
+        </div>
         <Routes>
-          {showSessions && (
-            <Route
-              path="/Sessions"
-              element={
-                <Sessions/>
-              }
-            />
-          )}
+          {showSessions && <Route path="/Sessions" element={<Sessions />} />}
 
           {showAvailableSessions && (
-            <Route
-              path="/Available_sessions"
-              element={
-                <AvailableSessions/>
-              }
-            />
+            <Route path="/Available_sessions" element={<AvailableSessions />} />
           )}
         </Routes>
       </div>

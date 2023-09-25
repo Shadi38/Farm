@@ -46,9 +46,9 @@ function AvailableSessions() {
 
   return (
     <>
-      <div>
-        <button onClick={loadAvailableSessions}>Available sessions</button>
-        <button onClick={registerClickHandler}>Register</button>
+      <div className="btnDiv">
+        <button className="btn" onClick={loadAvailableSessions} >Available sessions</button>
+        <button className="btn" onClick={registerClickHandler}>Register</button>
       </div>
       <div>
         {loadSessions.length > 0 ? (

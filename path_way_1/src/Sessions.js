@@ -9,7 +9,7 @@ function Sessions() {
         <div>
             
                 
-                    <div className="calendar-container">
+                    <div className="calendar-container" id="calendar">
                         <Calendar onChange={setDate} value={date} />
                     </div>
                     <div className="text-center">Selected date: {date.toDateString()}</div>

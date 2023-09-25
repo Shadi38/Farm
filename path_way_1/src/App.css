@@ -12,7 +12,7 @@
   align-items: center;
   justify-content: start;
   font-size: calc(10px + 2vmin);
-  color:black;
+  color:#FC4445;
 }
 
 
@@ -25,6 +25,9 @@
     transform: rotate(360deg);
   }
 }
+#calendar{
+  margin: 40px;
+}
 .sessionsDiv{
   display: flex;
   margin: 10px;
@@ -34,6 +37,20 @@
    .sessionsDiv div{
     margin: 20px;
    }
+
+   .linkDiv link{
+   margin: 20px;
+   }
+
+   .btn{
+    margin: 20px;
+   }
+
+   .btnDiv{
+    display: flex;
+    justify-content: center;
+   }
+
 .input-group {
   display: flex;
   justify-content: center;
