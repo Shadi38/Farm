@@ -28,7 +28,7 @@ function App() {
               setShowAvailableSessions(false); // Hide the other content
             }}
             style={{
-              color: "black",
+              color: "#FC4445",
               marginLeft: 20,
               textDecoration: "none",
               fontWeight: "bold",
@@ -44,7 +44,7 @@ function App() {
               setShowSessions(false);
             }}
             style={{
-              color: "black",
+              color: "#FC4445",
               marginLeft: 20,
               textDecoration: "none",
               fontWeight: "bold",

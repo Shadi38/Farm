@@ -1,6 +1,11 @@
 
 
-
+body{
+  background-image: url('https://images.pexels.com/photos/1276237/pexels-photo-1276237.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
 
 .App {
   color: black;
@@ -24,6 +29,7 @@
   to {
     transform: rotate(360deg);
   }
+
 }
 #calendar{
   margin: 40px;
@@ -44,6 +50,10 @@
 
    .btn{
     margin: 20px;
+    color: #FC4445;
+    background-color: rgb(248, 230, 209);
+    border-radius: 3px;
+    border-style: none;
    }
 
    .btnDiv{
@@ -54,21 +64,26 @@
 .input-group {
   display: flex;
   justify-content: center;
-  margin: 10px;
-background-color: white;
+  margin: 30px;
+
 }
 .input-group label {
-  margin-bottom: 5px;
+  display: block;
+  margin: 20px;
+  padding-right: 5px;
   color: #FC4445;
   font-weight: bold ;
 }
 .lineInput{
-  margin-left: 10px;
- background-color:white;                 
+  display: block;
+  margin: 15px;
+  padding-left: 0px;
+ background-color:rgb(248, 230, 209);                 
  border: none;
  border-bottom: 1px solid #FC4445; 
  outline: none;
  padding: 5px;
+ border-radius: 3px;
 }
 
 /* calender css */

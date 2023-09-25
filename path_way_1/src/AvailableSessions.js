@@ -47,8 +47,12 @@ function AvailableSessions() {
   return (
     <>
       <div className="btnDiv">
-        <button className="btn" onClick={loadAvailableSessions} >Available sessions</button>
-        <button className="btn" onClick={registerClickHandler}>Register</button>
+        <button className="btn" onClick={loadAvailableSessions}>
+          Available sessions
+        </button>
+        <button className="btn" onClick={registerClickHandler}>
+          Register
+        </button>
       </div>
       <div>
         {loadSessions.length > 0 ? (
@@ -72,7 +76,7 @@ function AvailableSessions() {
           <form
             className="formDiv"
             style={{ width: "100vw" }}
-             onSubmit={addClickHandeler}
+            onSubmit={addClickHandeler}
           >
             <div className="input-group">
               <label htmlFor="name">Name</label>
@@ -111,7 +115,14 @@ function AvailableSessions() {
               />
             </div>
             <div className="input-group">
-              <button style={{ borderRadius: 5 }} type="submit">
+              <button
+                style={{
+                  borderRadius: 5,
+                  backgroundColor: "rgb(248, 230, 209)",
+                  color: "#FC4445",
+                }}
+                type="submit"
+              >
                 submit
               </button>
             </div>
