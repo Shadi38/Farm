@@ -34,11 +34,19 @@ body{
 #calendar{
   margin: 40px;
 }
+.mainDiv{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 .sessionsDiv{
   display: flex;
-  margin: 10px;
+ width: 400px;
  padding: 10px;
-
+ background-color: rgb(248, 230, 209);
+ margin-bottom: 5px;
+ border-radius: 3px;
 }
    .sessionsDiv div{
     margin: 20px;
@@ -63,6 +71,7 @@ body{
 
 .input-group {
   display: flex;
+  width: 400px;
   justify-content: center;
   margin: 30px;
 

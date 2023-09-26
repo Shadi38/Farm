@@ -6,11 +6,14 @@ function AvailableSessions() {
   const [name,setName] = useState("");
   const [day, setDay] = useState("");
   const [sessionData, setSessionData] = useState("");
+  const [registerMessage, setRegisterMessage] = useState("");
 
   async function loadAvailableSessions() {
     console.log("clicked");
     try {
-      const response = await fetch("http://localhost:3000/sessions");
+      const response = await fetch(
+        "https://pathway-project-1.onrender.com/sessions"
+      );
       console.log(response);
       if (!response.ok) {
         throw new Error("something went wrong");
@@ -30,7 +33,7 @@ function AvailableSessions() {
   function addClickHandeler(e) {
     e.preventDefault();
     const newVolunteer = {name:name,day:day,sessions:sessionData}
-    fetch("http://localhost:3000/sessions/volunteers", {
+    fetch("https://pathway-project-1.onrender.com/sessions/volunteers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +42,8 @@ function AvailableSessions() {
     })
       .then((response) => response.json())
       .then((data) => {
-        //???????????
+        // setRegisterMessage(data);
+        // console.log(registerMessage);
         console.log(data);
       });
   }
@@ -54,81 +58,82 @@ function AvailableSessions() {
           Register
         </button>
       </div>
-      <div>
-        {loadSessions.length > 0 ? (
-          loadSessions.map((session, index) => {
-            return (
-              <div key={index}>
-                <div className="sessionsDiv">
-                  <div>{session.day}</div>
-                  <div>Morning: {session.morning}</div>
-                  <div>Evening:{session.evening}</div>
+      <div className="mainDiv">
+        <div>
+          {loadSessions.length > 0 ? (
+            loadSessions.map((session, index) => {
+              return (
+                <div key={index}  style={{ width: 400,}}>
+                  <div className="sessionsDiv">
+                    <div>{session.day}</div>
+                    <div>Morning: {session.morning}</div>
+                    <div>Evening:{session.evening}</div>
+                  </div>
                 </div>
+              );
+            })
+          ) : (
+            <p style={{ fontWeight: "bold", color: "white" }}>Loading . . .</p>
+          )}
+        </div>
+        {register && (
+          <div className="registerDiv">
+            <form
+              className="formDiv"
+              onSubmit={addClickHandeler}
+            >
+              <div className="input-group">
+                <label htmlFor="name">Name</label>
+                <input
+                  className="lineInput"
+                  id="name"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                  required
+                />
               </div>
-            );
-          })
-        ) : (
-          <p style={{ fontWeight: "bold", color: "white" }}>Loading . . .</p>
+              <div className="input-group">
+                <label htmlFor="day">Day</label>
+                <input
+                  className="lineInput"
+                  id="day"
+                  value={day}
+                  onChange={(e) => {
+                    setDay(e.target.value);
+                  }}
+                  required
+                />
+              </div>
+              <div className="input-group">
+                <label htmlFor="session">Session</label>
+                <input
+                  className="lineInput"
+                  id="session"
+                  value={sessionData}
+                  onChange={(e) => {
+                    setSessionData(e.target.value);
+                  }}
+                  required
+                />
+              </div>
+              <div className="input-group">
+                <button
+                  style={{
+                    borderRadius: 5,
+                    backgroundColor: "rgb(248, 230, 209)",
+                    color: "#FC4445",
+                  }}
+                  type="submit"
+                >
+                  submit
+                </button>
+              </div>
+            </form>
+          </div>
         )}
       </div>
-      {register && (
-        <div className="registerDiv">
-          <form
-            className="formDiv"
-            style={{ width: "100vw" }}
-            onSubmit={addClickHandeler}
-          >
-            <div className="input-group">
-              <label htmlFor="name">Name</label>
-              <input
-                className="lineInput"
-                id="name"
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-                required
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="day">Day</label>
-              <input
-                className="lineInput"
-                id="day"
-                value={day}
-                onChange={(e) => {
-                  setDay(e.target.value);
-                }}
-                required
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="session">Session</label>
-              <input
-                className="lineInput"
-                id="session"
-                value={sessionData}
-                onChange={(e) => {
-                  setSessionData(e.target.value);
-                }}
-                required
-              />
-            </div>
-            <div className="input-group">
-              <button
-                style={{
-                  borderRadius: 5,
-                  backgroundColor: "rgb(248, 230, 209)",
-                  color: "#FC4445",
-                }}
-                type="submit"
-              >
-                submit
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
     </>
   );
 }
