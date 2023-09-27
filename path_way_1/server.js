@@ -11,22 +11,22 @@ const { body, validationResult } = require("express-validator");
 const port = process.env.PORT || 3000;
 const { Pool } = require("pg");
 
-const db = new Pool({
-  user: "shadifakhri", 
-  host: "localhost",
-  database: "database",
-  password: "",
-  port: 5432,
-});
-
 // const db = new Pool({
-//   user: process.env.DB_USER,
-//   host: process.env.DB_HOST,
-//   database: process.env.DB_NAME,
-//   password: process.env.DB_PASSWORD,
-//   port: process.env.DB_PORT,
-//   ssl: false,
+//   user: "shadifakhri", 
+//   host: "localhost",
+//   database: "database",
+//   password: "",
+//   port: 5432,
 // });
+
+const db = new Pool({
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
+  ssl: false,
+});
 
 app.get('/sessions',async function (req,res) {
    const result = await db.query('SELECT * FROM sessions');
@@ -74,7 +74,7 @@ const query ="INSERT INTO volunteers (name,day,sessions) VALUES($1, $2, $3)";
         res.status(500).json({ error: "Internal Server Error" });
       } else {
        
-        res.status(201).json({ message: "Thanks for registering" });
+        res.status(201).json("Thanks for registering");
       }
 })
 

@@ -5,13 +5,16 @@ function AvailableSessions() {
   const [register,setRegister] = useState(false);
   const [name,setName] = useState("");
   const [day, setDay] = useState("");
-  const [sessionData, setSessionData] = useState("");
+  const [sessionData, setSessionData] = useState("evening");
   const [registerMessage, setRegisterMessage] = useState("");
+  const [registerStatus, setRegisterStatus] = useState(false)
 
   async function loadAvailableSessions() {
     console.log("clicked");
     try {
-      const response = await fetch("http://localhost:3000/sessions");
+      const response = await fetch(
+        "https://pathway-project-1-server.onrender.com/sessions"
+      );
       console.log(response);
       if (!response.ok) {
         throw new Error("something went wrong");
@@ -31,7 +34,7 @@ function AvailableSessions() {
   function addClickHandeler(e) {
     e.preventDefault();
     const newVolunteer = {name:name,day:day,sessions:sessionData}
-    fetch("http://localhost:3000/sessions/volunteers", {
+    fetch("https://pathway-project-1-server.onrender.com/sessions/volunteers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,9 +43,8 @@ function AvailableSessions() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // setRegisterMessage(data);
-        // console.log(registerMessage);
-        console.log(data);
+        setRegisterMessage(data);
+        setRegisterStatus(true);
       });
   }
 
@@ -61,7 +63,7 @@ function AvailableSessions() {
           {loadSessions.length > 0 ? (
             loadSessions.map((session, index) => {
               return (
-                <div key={index}  style={{ width: 400,}}>
+                <div key={index} style={{ width: 400 }}>
                   <div className="sessionsDiv">
                     <div>{session.day}</div>
                     <div>Morning: {session.morning}</div>
@@ -76,10 +78,7 @@ function AvailableSessions() {
         </div>
         {register && (
           <div className="registerDiv">
-            <form
-              className="formDiv"
-              onSubmit={addClickHandeler}
-            >
+            <form className="formDiv" onSubmit={addClickHandeler}>
               <div className="input-group">
                 <label htmlFor="name">Name</label>
                 <input
@@ -106,7 +105,7 @@ function AvailableSessions() {
               </div>
               <div className="input-group">
                 <label htmlFor="session">Session</label>
-                <input
+                {/* <input
                   className="lineInput"
                   id="session"
                   value={sessionData}
@@ -114,7 +113,18 @@ function AvailableSessions() {
                     setSessionData(e.target.value);
                   }}
                   required
-                />
+                /> */}
+                <select
+                  className="lineInput"
+                  value={sessionData}
+                  onChange={(e) => {
+                    const selectedsession = e.target.value;
+                    setSessionData(selectedsession);
+                  }}
+                >
+                  <option value={"morning"}>Morning</option>
+                  <option value={"evening"}>Evening</option>
+                </select>
               </div>
               <div className="input-group">
                 <button
@@ -128,6 +138,9 @@ function AvailableSessions() {
                   submit
                 </button>
               </div>
+              {registerStatus && (
+                <div className="messageDiv">{registerMessage}</div>
+              )}
             </form>
           </div>
         )}
