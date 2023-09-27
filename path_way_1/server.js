@@ -28,6 +28,10 @@ const db = new Pool({
   ssl: false,
 });
 
+app.get("/",function (req,res) {
+res.status(200).json("wellcome")
+})
+
 app.get('/sessions',async function (req,res) {
    const result = await db.query('SELECT * FROM sessions');
    try {
