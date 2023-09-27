@@ -33,15 +33,16 @@ res.status(200).json("wellcome")
 })
 
 app.get('/sessions',async function (req,res) {
-   const result = await db.query('SELECT * FROM sessions');
-   try {
+  try {
+    const result = await db.query("SELECT * FROM sessions");
+
     if (result.rows.length === 0) {
       return res.json([]);
     }
     res.json(result.rows);
-   } catch (error) {
+  } catch (error) {
     return res.status(500).json({ error: "Internal server error" });
-   }
+  }
 })
 
 app.get("/sessions/volunteers", async function (req, res) {
