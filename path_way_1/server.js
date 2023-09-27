@@ -28,6 +28,11 @@ const db = new Pool({
   ssl: process.env.DB_SSL,
 });
 
+db.connect(function (err) {
+  if (err) throw err;
+  console.log("connected");
+})
+
 app.get("/",function (req,res) {
 res.status(200).json("wellcome")
 })
