@@ -2,38 +2,31 @@ const express = require("express")
 const app = express();
 const cors = require("cors");
 require('dotenv').config();
-// Use CORS middleware
-// app.use(cors());
-app.use(cors({ origin: "http://localhost:3001" }));
+
+ app.use(cors());
+
 app.use(express.json());
 const { body, validationResult } = require("express-validator");
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3002");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+
 const port = process.env.PORT || 3000;
 const { Pool } = require("pg");
 
-// const db = new Pool({
-//   user: "shadifakhri", 
-//   host: "localhost",
-//   database: "database",
-//   password: "",
-//   port: 5432,
-// });
-
 const db = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
-  ssl: false,
+  user: "shadifakhri", 
+  host: "localhost",
+  database: "database",
+  password: "",
+  port: 5432,
 });
+
+// const db = new Pool({
+//   user: process.env.DB_USER,
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_NAME,
+//   password: process.env.DB_PASSWORD,
+//   port: process.env.DB_PORT,
+//   ssl: false,
+// });
 
 app.get('/sessions',async function (req,res) {
    const result = await db.query('SELECT * FROM sessions');
