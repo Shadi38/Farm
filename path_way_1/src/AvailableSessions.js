@@ -222,7 +222,16 @@ function cancelClickHandler(params) {
                           </button>
                         </div>
                       </div>
-                      <button onClick={cancelClickHandler}>Cancel</button>
+                      <button
+                        style={{
+                          borderRadius: 5,
+                          backgroundColor: "rgb(248, 230, 209)",
+                          color: "#FC4445",
+                        }}
+                        onClick={cancelClickHandler}
+                      >
+                        Cancel
+                      </button>
                     </div>
                   );
                 })
