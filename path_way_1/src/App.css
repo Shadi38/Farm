@@ -34,6 +34,17 @@ body{
 #calendar{
   margin: 40px;
 }
+.cancelDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cancelBtn{
+  border-radius: 3px;
+  background-color: rgb(248, 230, 209);
+  color: #FC4445;
+  border-style: none;
+}
 .mainDiv{
   display: flex;
   justify-content: center;
