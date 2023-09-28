@@ -46,13 +46,16 @@ setLoadVolunteers(data);
  
 }
  function deleteClickHandler(volunteer) {
-     fetch(`https://pathway-project-1-server.onrender.com/${volunteer.id}`, {
-       method: "DELETE",
-       headers: {
-         "Content-Type": "application/json",
-       },
-       body: JSON.stringify(volunteer),
-     })
+     fetch(
+       `https://pathway-project-1-server.onrender.com/sessions/volunteers/${volunteer.id}`,
+       {
+         method: "DELETE",
+         headers: {
+           "Content-Type": "application/json",
+         },
+         body: JSON.stringify(volunteer),
+       }
+     )
        .then((response) => {
          if (!response.ok) {
            throw new Error("Failed to delete volunteer");
