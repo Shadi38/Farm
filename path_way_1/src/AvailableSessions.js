@@ -8,8 +8,9 @@ function AvailableSessions() {
   const [day, setDay] = useState("");
   const [sessionData, setSessionData] = useState("evening");
   const [registerMessage, setRegisterMessage] = useState("");
-  const [registerStatus, setRegisterStatus] = useState(false)
+  const [registerStatus, setRegisterStatus] = useState(false);
 
+//loading avalable sessions
   async function loadAvailableSessions(e) {
     e.preventDefault();
     try {
@@ -31,7 +32,8 @@ async function volunteerClickHandeler(e) {
   e.preventDefault();
   try {
     const response = await fetch(
-      "https://pathway-project-1-server.onrender.com/sessions/volunteers"
+       "https://pathway-project-1-server.onrender.com/sessions/volunteers"
+      
     );
     if (!response.ok) {
       throw new Error("something went wrong");
@@ -41,8 +43,32 @@ setLoadVolunteers(data);
   } catch (error) {
      console.error("Error fetching data:", error);
   }
-  
+ 
 }
+ function deleteClickHandler(volunteer) {
+     fetch(`https://pathway-project-1-server.onrender.com/${volunteer.id}`, {
+       method: "DELETE",
+       headers: {
+         "Content-Type": "application/json",
+       },
+       body: JSON.stringify(volunteer),
+     })
+       .then((response) => {
+         if (!response.ok) {
+           throw new Error("Failed to delete volunteer");
+         }
+         return response.json();
+       })
+       .then(() => {
+         const updatedVolunteer = loadVolunteers.filter(
+           (item) => item.id !== volunteer.id
+         );
+         setLoadVolunteers(updatedVolunteer);
+       })
+       .catch((error) => {
+         console.error("Error deleting volunteer:", error);
+       }); 
+      }
   
   function registerClickHandler() {
      setRegister(true)
@@ -61,6 +87,7 @@ setLoadVolunteers(data);
       .then((response) => response.json())
       .then((data) => {
         setRegisterMessage(data);
+        
         setRegisterStatus(true);
       });
   }
@@ -175,6 +202,17 @@ setLoadVolunteers(data);
                         <div>{volunteer.name}</div>
                         <div>{volunteer.day}</div>
                         <div>{volunteer.sessions}</div>
+                        <div>
+                          <button
+                            style={{
+                              borderRadius: 5,
+                              backgroundColor: "rgb(248, 230, 209)",
+                              color: "#FC4445",
+                            }} onClick={()=>deleteClickHandler(volunteer)}
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </div>
                     </div>
                   );

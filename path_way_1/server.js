@@ -11,22 +11,22 @@ const { body, validationResult } = require("express-validator");
 const port = process.env.PORT || 3000;
 const { Pool } = require("pg");
 
-// const db = new Pool({
-//   user: "shadifakhri", 
-//   host: "localhost",
-//   database: "database",
-//   password: "",
-//   port: 5432,
-// });
-
 const db = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
-  ssl: process.env.DB_SSL,
+  user: "shadifakhri", 
+  host: "localhost",
+  database: "database",
+  password: "",
+  port: 5432,
 });
+
+// const db = new Pool({
+//   user: process.env.DB_USER,
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_NAME,
+//   password: process.env.DB_PASSWORD,
+//   port: process.env.DB_PORT,
+//   ssl: process.env.DB_SSL,
+// });
 
 db.connect(function (err) {
   if (err) throw err;
@@ -91,15 +91,20 @@ const query ="INSERT INTO volunteers (name,day,sessions) VALUES($1, $2, $3)";
 
 })
 
-
-
-
-
-
-
-
-
-
+//deleting volunteer with id
+app.delete("/sessions/volunteers/:id", async function (req, res) {
+  const volunteerId = req.params.id;
+  try {
+    const result = await db.query("DELETE FROM volunteers WHERE id=$1", [volunteerId]);
+    if (result.rowCount === 0) {
+      return res.status(404).json(`Volunteer with id ${volunteerId} not found`);
+    }
+    res.json(volunteerId);
+  } catch (error) {
+    console.error("Error deleting volunteer:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
