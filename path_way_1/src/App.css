@@ -78,14 +78,18 @@ body{
 
 }
 .input-group label {
-  display: block;
+  /* display: block; */
+  display: flex;
+  text-align: left;
   margin: 20px;
   padding-right: 5px;
   color: #FC4445;
   font-weight: bold ;
 }
 .lineInput{
-  display: block;
+  /* display: block; */
+  display: flex;
+  text-align: left;
   margin: 15px;
   padding-left: 0px;
  background-color:rgb(248, 230, 209);                 
