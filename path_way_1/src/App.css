@@ -55,15 +55,15 @@ body{
 
 .sessionsDiv{
   display: flex;
- width: 400px;
+ width: 380px;
  padding: 10px;
  background-color: rgb(248, 230, 209);
  margin: 5px;
  border-radius: 3px;
 }
-   /* .sessionsDiv div{
+   .sessionsDiv div{
     margin: 20px;
-   } */
+   }
 
    .linkDiv link{
    margin: 20px;
