@@ -84,7 +84,7 @@ body{
 
 .input-group {
   display: flex;
-  width: 400px;
+  width: 380px;
   justify-content: center;
   margin: 30px;
 
@@ -116,10 +116,14 @@ body{
   padding: 10px;
   text-align: center;
   background-color: rgb(248, 230, 209);
-  width: 200px;
+  width: 180px;
   height: 40px;
   border-radius: 3px;
-  
+}
+.mainMessageDive{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* calender css */

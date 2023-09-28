@@ -134,7 +134,7 @@ function cancelClickHandler(params) {
             : ""}
         </div>
         {register && (
-          <div>
+          <div style={{width:380}}>
             <form className="formDiv" onSubmit={addClickHandeler}>
               <div className="input-group">
                 <label htmlFor="name">Name</label>
@@ -187,7 +187,9 @@ function cancelClickHandler(params) {
                 </button>
               </div>
               {registerStatus && (
-                <div className="messageDiv">{registerMessage}</div>
+                <div className="mainMessageDive">
+                  <div className="messageDiv">{registerMessage}</div>
+                </div>
               )}
             </form>
           </div>
