@@ -47,6 +47,8 @@ setLoadVolunteers(data);
 //cancel btn
 function cancelClickHandler(params) {
   setLoadVolunteers('');
+  setRegister('');
+  setLoadSessions('');
 }
 
  function deleteClickHandler(volunteer) {
