@@ -114,22 +114,21 @@ function cancelClickHandler(params) {
       </div>
       <div className="mainDiv">
         <div>
-          {loadSessions.length > 0 ? (
-            loadSessions.map((session, index) => {
-              return (
-                <div key={index} style={{ width: 400 }}>
-                  <div className="sessionsDiv">
-                    <div>{session.day}</div>
-                    <div>Morning: {session.morning}</div>
-                    <div>Evening:{session.evening}</div>
+          {loadSessions.length > 0
+            ? loadSessions.map((session, index) => {
+                return (
+                  <div key={index} style={{ width: 400 }}>
+                    <div className="sessionsDiv">
+                      <div>{session.day}</div>
+                      <div>Morning: {session.morning}</div>
+                      <div>Evening:{session.evening}</div>
+                    </div>
                   </div>
-                </div>
-              );
-            })
-          ) : (
-            ''
-            // <p style={{ fontWeight: "bold", color: "white" }}>Loading . . .</p>
-          )}
+                );
+              })
+            : ""
+              // <p style={{ fontWeight: "bold", color: "white" }}>Loading . . .</p>
+          }
         </div>
         {register && (
           <div>
@@ -200,43 +199,41 @@ function cancelClickHandler(params) {
           </div>
         )}
         <div>
-          {
-            loadVolunteers.length > 0
-              ? loadVolunteers.map((volunteer, index) => {
-                  return (
-                    <div key={index} style={{ width: 400 }}>
-                      <div className="sessionsDiv">
-                        <div>{volunteer.name}</div>
-                        <div>{volunteer.day}</div>
-                        <div>{volunteer.sessions}</div>
-                        <div>
-                          <button
-                            style={{
-                              borderRadius: 5,
-                              backgroundColor: "rgb(248, 230, 209)",
-                              color: "#FC4445",
-                            }}
-                            onClick={() => deleteClickHandler(volunteer)}
-                          >
-                            Delete
-                          </button>
-                        </div>
+          <button
+            style={{
+              borderRadius: 5,
+              backgroundColor: "rgb(248, 230, 209)",
+              color: "#FC4445",
+            }}
+            onClick={cancelClickHandler}
+          >
+            Cancel
+          </button>
+          {loadVolunteers.length > 0
+            ? loadVolunteers.map((volunteer, index) => {
+                return (
+                  <div key={index} style={{ width: 400 }}>
+                    <div className="sessionsDiv">
+                      <div>{volunteer.name}</div>
+                      <div>{volunteer.day}</div>
+                      <div>{volunteer.sessions}</div>
+                      <div>
+                        <button
+                          style={{
+                            borderRadius: 5,
+                            backgroundColor: "rgb(248, 230, 209)",
+                            color: "#FC4445",
+                          }}
+                          onClick={() => deleteClickHandler(volunteer)}
+                        >
+                          Delete
+                        </button>
                       </div>
-                      <button
-                        style={{
-                          borderRadius: 5,
-                          backgroundColor: "rgb(248, 230, 209)",
-                          color: "#FC4445",
-                        }}
-                        onClick={cancelClickHandler}
-                      >
-                        Cancel
-                      </button>
                     </div>
-                  );
-                })
-              : "" 
-          }
+                  </div>
+                );
+              })
+            : ""}
         </div>
       </div>
     </>
