@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 function AvailableSessions() {
   const [loadSessions, setLoadSessions] = useState([]);
+  const [loadVolunteers, setLoadVolunteers] = useState([]);
   const [register,setRegister] = useState(false);
   const [name,setName] = useState("");
   const [day, setDay] = useState("");
@@ -9,13 +10,12 @@ function AvailableSessions() {
   const [registerMessage, setRegisterMessage] = useState("");
   const [registerStatus, setRegisterStatus] = useState(false)
 
-  async function loadAvailableSessions() {
-    console.log("clicked");
+  async function loadAvailableSessions(e) {
+    e.preventDefault();
     try {
       const response = await fetch(
         "https://pathway-project-1-server.onrender.com/sessions"
       );
-      console.log(response);
       if (!response.ok) {
         throw new Error("something went wrong");
       }
@@ -26,7 +26,24 @@ function AvailableSessions() {
       console.error("Error fetching data:", error);
     }
   }
-
+//////////////
+async function volunteerClickHandeler(e) {
+  e.preventDefault();
+  try {
+    const response = await fetch(
+      "https://pathway-project-1-server.onrender.com/sessions/volunteers"
+    );
+    if (!response.ok) {
+      throw new Error("something went wrong");
+    }
+const data = await response.json();
+setLoadVolunteers(data);
+  } catch (error) {
+     console.error("Error fetching data:", error);
+  }
+  
+}
+  
   function registerClickHandler() {
      setRegister(true)
   }
@@ -56,6 +73,9 @@ function AvailableSessions() {
         </button>
         <button className="btn" onClick={registerClickHandler}>
           Register
+        </button>
+        <button className="btn" onClick={volunteerClickHandeler}>
+          volunteers
         </button>
       </div>
       <div className="mainDiv">
@@ -144,6 +164,23 @@ function AvailableSessions() {
             </form>
           </div>
         )}
+        <div>
+          {
+            loadVolunteers.length > 0
+              ? loadVolunteers.map((volunteer, index) => {
+                  return (
+                    <div key={index} style={{ width: 400 }}>
+                      <div className="sessionsDiv">
+                        <div>{volunteer.name}</div>
+                        <div>{volunteer.day}</div>
+                        <div>{volunteer.sessions}</div>
+                      </div>
+                    </div>
+                  );
+                })
+              : "No volunteers registered yet" 
+          }
+        </div>
       </div>
     </>
   );

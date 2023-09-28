@@ -51,15 +51,16 @@ app.get('/sessions',async function (req,res) {
 })
 
 app.get("/sessions/volunteers", async function (req, res) {
-  const result = await db.query("SELECT * FROM volunteers");
-  try {
-    if (result.rows.length === 0) {
-      return res.json([]);
-    }
-    res.json(result.rows);
-  } catch (error) {
-    return res.status(500).json({ error: "Internal server error" });
-  }
+ try {
+   const result = await db.query("SELECT * FROM volunteers");
+
+   if (result.rows.length === 0) {
+     return res.json([]);
+   }
+   res.json(result.rows);
+ } catch (error) {
+   return res.status(500).json({ error: "Internal server error" });
+ }
 });
 
 //adding name of the volunteer and adding day and sessions that choosed
