@@ -21,7 +21,6 @@ function AvailableSessions() {
         throw new Error("something went wrong");
       }
       const data = await response.json();
-      console.log(data);
       setLoadSessions(data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -44,13 +43,13 @@ setLoadVolunteers(data);
      console.error("Error fetching data:", error);
   }
 }
-//cancel btn
+//cancel button 
 function cancelClickHandler(params) {
   setLoadVolunteers('');
   setRegister('');
   setLoadSessions('');
 }
-
+//deleting volunteer's information specified by id
  function deleteClickHandler(volunteer) {
      fetch(
        `https://pathway-project-1-server.onrender.com/sessions/volunteers/${volunteer.id}`,
@@ -82,7 +81,7 @@ function cancelClickHandler(params) {
   function registerClickHandler() {
      setRegister(true)
   }
-  
+  //adding new volunteer
   function addClickHandeler(e) {
     e.preventDefault();
     const newVolunteer = {name:name,day:day,sessions:sessionData}
@@ -96,7 +95,6 @@ function cancelClickHandler(params) {
       .then((response) => response.json())
       .then((data) => {
         setRegisterMessage(data);
-        
         setRegisterStatus(true);
       });
   }
@@ -164,15 +162,6 @@ function cancelClickHandler(params) {
               </div>
               <div className="input-group">
                 <label htmlFor="session">Session</label>
-                {/* <input
-                  className="lineInput"
-                  id="session"
-                  value={sessionData}
-                  onChange={(e) => {
-                    setSessionData(e.target.value);
-                  }}
-                  required
-                /> */}
                 <select
                   className="lineInput"
                   value={sessionData}
