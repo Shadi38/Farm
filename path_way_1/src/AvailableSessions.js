@@ -27,7 +27,7 @@ function AvailableSessions() {
       console.error("Error fetching data:", error);
     }
   }
-//////////////
+//loading information about volunteers
 async function volunteerClickHandeler(e) {
   e.preventDefault();
   try {
@@ -43,8 +43,12 @@ setLoadVolunteers(data);
   } catch (error) {
      console.error("Error fetching data:", error);
   }
- 
 }
+//cancel btn
+function cancelClickHandler(params) {
+  setLoadVolunteers('');
+}
+
  function deleteClickHandler(volunteer) {
      fetch(
        `https://pathway-project-1-server.onrender.com/sessions/volunteers/${volunteer.id}`,
@@ -216,6 +220,7 @@ setLoadVolunteers(data);
                             Delete
                           </button>
                         </div>
+                        <button onClick={cancelClickHandler}>Cancel</button>
                       </div>
                     </div>
                   );
