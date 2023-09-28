@@ -114,6 +114,18 @@ function cancelClickHandler(params) {
           volunteers
         </button>
       </div>
+      <div>
+        <button
+          style={{
+            borderRadius: 5,
+            backgroundColor: "rgb(248, 230, 209)",
+            color: "#FC4445",
+          }}
+          onClick={cancelClickHandler}
+        >
+          Cancel
+        </button>
+      </div>
       <div className="mainDiv">
         <div>
           {loadSessions.length > 0
@@ -128,9 +140,7 @@ function cancelClickHandler(params) {
                   </div>
                 );
               })
-            : ""
-              // <p style={{ fontWeight: "bold", color: "white" }}>Loading . . .</p>
-          }
+            : ""}
         </div>
         {register && (
           <div>
@@ -201,16 +211,6 @@ function cancelClickHandler(params) {
           </div>
         )}
         <div>
-          <button
-            style={{
-              borderRadius: 5,
-              backgroundColor: "rgb(248, 230, 209)",
-              color: "#FC4445",
-            }}
-            onClick={cancelClickHandler}
-          >
-            Cancel
-          </button>
           {loadVolunteers.length > 0
             ? loadVolunteers.map((volunteer, index) => {
                 return (
