@@ -93,11 +93,12 @@ setLoadVolunteers(data);
               );
             })
           ) : (
-            <p style={{ fontWeight: "bold", color: "white" }}>Loading . . .</p>
+            ''
+            // <p style={{ fontWeight: "bold", color: "white" }}>Loading . . .</p>
           )}
         </div>
         {register && (
-          <div className="registerDiv">
+          <div>
             <form className="formDiv" onSubmit={addClickHandeler}>
               <div className="input-group">
                 <label htmlFor="name">Name</label>
@@ -178,7 +179,7 @@ setLoadVolunteers(data);
                     </div>
                   );
                 })
-              : "No volunteers registered yet" 
+              : "" 
           }
         </div>
       </div>
