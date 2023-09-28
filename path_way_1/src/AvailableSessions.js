@@ -215,13 +215,14 @@ function cancelClickHandler(params) {
                               borderRadius: 5,
                               backgroundColor: "rgb(248, 230, 209)",
                               color: "#FC4445",
-                            }} onClick={()=>deleteClickHandler(volunteer)}
+                            }}
+                            onClick={() => deleteClickHandler(volunteer)}
                           >
                             Delete
                           </button>
                         </div>
-                        <button onClick={cancelClickHandler}>Cancel</button>
                       </div>
+                      <button onClick={cancelClickHandler}>Cancel</button>
                     </div>
                   );
                 })
