@@ -1,23 +1,30 @@
 import React,{useState} from "react";
 
 function RegisterForm(props) {
-  const { selectedColor, setSelectedColor } = props;
-    const [name, setName] = useState("");
-    const [lastname, setLastname] = useState("");
-    const [address, setAddress] = useState("");
-    const [day, setDay] = useState("");
-    const [time, setTime] = useState("evening");
-    const [registerMessage, setRegisterMessage] = useState("");
-    const [registerStatus, setRegisterStatus] = useState(false);
+  // const { selectedColor, setSelectedColor } = props;
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [address, setAddress] = useState("");
+  const [day, setDay] = useState("");
+  const [time, setTime] = useState("evening");
+  const [registerMessage, setRegisterMessage] = useState("");
+  const [registerStatus, setRegisterStatus] = useState(false);
 
-
+  //pathway-project-1-server.onrender.com
   //adding new volunteer
   function addClickHandeler(e) {
     e.preventDefault();
     // set tile colour to orange
-    setSelectedColor("orange");
-    const newVolunteer = { name: name, lastname: lastname , address: address,day: day, time:time, };
-    fetch("https://pathway-project-1-server.onrender.com/sessions/volunteers", {
+    // setSelectedColor("orange");
+    const newVolunteer = {
+      name: name,
+      lastname: lastname,
+      address: address,
+      day: day,
+      time: time,
+      booked: true,
+    };
+    fetch("http://localhost:3000/sessions/Volunteers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,19 +60,19 @@ function RegisterForm(props) {
             id="lastname"
             value={lastname}
             onChange={(e) => {
-              setName(e.target.value);
+              setLastname(e.target.value);
             }}
             required
           />
         </div>
         <div className="input-group">
-          <label htmlFor="address">Adress</label>
+          <label htmlFor="address">Address</label>
           <input
             className="lineInput"
             id="address"
             value={address}
             onChange={(e) => {
-              setName(e.target.value);
+              setAddress(e.target.value);
             }}
             required
           />
@@ -79,6 +86,7 @@ function RegisterForm(props) {
             onChange={(e) => {
               setDay(e.target.value);
             }}
+            placeholder="Oct 08, 2023"
             required
           />
         </div>
