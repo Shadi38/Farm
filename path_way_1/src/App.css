@@ -232,6 +232,7 @@ body{
 
 .react-calendar__tile:disabled {
   background-color: #f0f0f0;
+ 
 }
 
 .react-calendar__tile:enabled:hover,
@@ -269,4 +270,18 @@ body{
 
 .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e6e6e6;
+}
+/* .react-calendar .react-calendar__tile {
+  background-color: lightgreen;
+} */
+
+/* tile colour */
+.react-calendar .green {
+  background-color:  green;
+}
+.react-calendar .red {
+  background-color:  red;
+}
+.react-calendar .orange {
+  background-color:  orange;
 }
