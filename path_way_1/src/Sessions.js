@@ -34,7 +34,7 @@ function Sessions() {
       console.log(data);
       
       
-      if (Array.isArray(data) && data.rows.length >= 2) {
+      if (data.rows && data.rows.length >= 2) {
         setFirstTimeStatus(data[0].time);
         setFirstBookedStatus(data[0].booked);
         setSecondTimeStatus(data[1].time);
