@@ -1,7 +1,8 @@
-import React,{useState} from "react";
 
-function RegisterForm(props) {
-  // const { selectedColor, setSelectedColor } = props;
+import React, { useState } from "react";
+
+function EveningComponent() {
+ 
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
   const [address, setAddress] = useState("");
@@ -16,14 +17,14 @@ function RegisterForm(props) {
     e.preventDefault();
     // set tile colour to orange
     // setSelectedColor("orange");
-    
+
     const newVolunteer = {
       name: name,
       lastname: lastname,
       address: address,
       day: day,
       time: time,
-      booked: true
+      booked: true,
     };
     console.log(newVolunteer);
     fetch("http://localhost:3000/sessions/volunteers", {
@@ -31,7 +32,7 @@ function RegisterForm(props) {
       headers: {
         "Content-Type": "application/json",
       },
-      
+
       body: JSON.stringify(newVolunteer),
     })
       .then((response) => response.json())
@@ -96,17 +97,13 @@ function RegisterForm(props) {
         </div>
         <div className="input-group">
           <label htmlFor="session">Time</label>
-          <select
+          <input
             className="lineInput"
             value={time}
             onChange={(e) => {
-              const selectedsession = e.target.value;
-              setTime(selectedsession);
+              setTime("Evening");
             }}
-          >
-            <option value={"morning"}>Morning</option>
-            <option value={"evening"}>Evening</option>
-          </select>
+          />
         </div>
         <div className="input-group">
           <button
@@ -129,4 +126,4 @@ function RegisterForm(props) {
     </div>
   );
 }
-export default RegisterForm;
+export default EveningComponent ;

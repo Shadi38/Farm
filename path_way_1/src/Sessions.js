@@ -1,79 +1,84 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
-import OrangeSessionWindow from "./OrangeSessionWindow";
 import RedSessionWindow from "./RedSessionWindow";
 import GreenSessionWindow from "./GreenSessionWindow";
-
-
+import { format } from "date-fns";
+import MorningRegisterForm from "./MorningRegisterForm";
+import EveningRegisterForm from "./EveningRegisterForm";
 
 function Sessions() {
-
   const [date, setDate] = useState(new Date());
-  const [selectedColor, setSelectedColor] = useState(null);
-  //const cellColours = ["green","orange","red"];
+  const [firstTimeStatus, setFirstTimeStatus] = useState(null);
+const [firstBookedStatus, setFirstBookedStatus] = useState(null);
+const [secondTimeStatus, setSecondTimeStatus] = useState(null);
+const [secondBookedStatus, setSecondBookedStatus] = useState(null);
+ 
 
-
-
-// function handleTileClick(tileDate) {
-//     console.log(tileDate);
-//     console.log(cellColours);
-//     // Check the color of the tile based on the date
-//     const tileColor = cellColours[tileDate.getDate() % 3];
-//     console.log(tileColor); 
-//     setSelectedColor(tileColor);
-// }
-function handleTileClick(tileDate) {
-  //  the choosed tile's day 
-  console.log(tileDate);
-
-   const formattedDate = tileDate.toLocaleDateString("en-US", {
-     year: "numeric",
-     month: "short",
-     day: "2-digit",
-   });
-   console.log(formattedDate);
-  /////??????????i have to access the colour of the tile related
-  //to tileDay and assign to  selectedColor with setSElectedColor
-}
-
-
-let sessionWindow = null;
-if (selectedColor === "red") {
-    sessionWindow = <RedSessionWindow />;  
-  } else if (selectedColor === "orange") {
-    sessionWindow = <OrangeSessionWindow />;
-  } else if (selectedColor === "green") {
-    sessionWindow = (
-      <GreenSessionWindow
-        selectedColor={selectedColor}
-        setSelectedColor={setSelectedColor}
-      />
-    );
+  //  format the date in  "YYYY-MM-DD" format
+  function formatDateForBackend(selectedDate) {
+    return format(selectedDate, "yyyy-MM-dd");
   }
-
-  return (
-    <div>
-      <div className="calendar-container" id="calendar">
-        <Calendar
-          onChange={setDate}
-          value={date}
-          onClickDay={(value, event) => {
-            handleTileClick(value);
-          }}
-          
-        />
+  //an array of objects with tim and booked propertis
+  async function handleChooseTime(day) { 
+    try {
+      // Format the selected date before sending it to the backend
+      const formattedDate = formatDateForBackend(day);
+      console.log(formattedDate);
+      const response = await fetch(
+        `http://localhost:3000/sessions/time:${formattedDate}`
+      );
+      const data = await response.json();
+      if (data.rows && data.rows.length >= 2) {
+        setFirstTimeStatus(data.rows[0].time);
+        setFirstBookedStatus(data.rows[0].booked);
+        setSecondTimeStatus(data.rows[1].time);
+        setSecondBookedStatus(data.rows[1].booked);
+      } else {
+        //  there are not enough elements in data.rows
+        console.error("Not enough data rows received");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } 
+  }
+  
+  let sessionWindow = null;
+  if ((firstBookedStatus && secondBookedStatus) === true) {
+    sessionWindow = <RedSessionWindow />;
+  } else if ((firstBookedStatus && secondBookedStatus) === false) {
+    sessionWindow = <GreenSessionWindow />;
+  } else if (
+    (firstBookedStatus === false && firstTimeStatus === "Morning") ||
+    (secondBookedStatus === false && secondTimeStatus === "Morning")
+  ) {
+    sessionWindow = <MorningRegisterForm />;
+  } else if (
+    (firstBookedStatus === false && firstTimeStatus === "Evening") ||
+    (secondBookedStatus === false && secondTimeStatus === "Evening")
+  ){
+    sessionWindow = <EveningRegisterForm />;
+  }
+    return (
+      <div>
+        <div className="calendar-container" id="calendar">
+          <Calendar
+            onChange={setDate}
+            value={date}
+            onClickDay={(value, event) => {
+              handleChooseTime(value);
+            }}
+          />
+        </div>
+        <div className="text-center">
+          Selected date:{" "}
+          {date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "2-digit",
+          })}
+        </div>
+        {sessionWindow}
       </div>
-      <div className="text-center">
-        Selected date:{" "}
-        {date
-          .toLocaleDateString("en-US", {
-     year: "numeric",
-     month: "short",
-     day: "2-digit",
-   })}
-      </div>
-      {sessionWindow}
-    </div>
-  );
+    );
 }
 export default Sessions;

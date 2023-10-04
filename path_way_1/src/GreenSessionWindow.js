@@ -20,7 +20,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 export default function GreenSessionWindow(props) {
-   const { selectedColor, setSelectedColor } =  props;
+   const { selectedColor, setSelectedColor } =  props ;
 
   const [open, setOpen] = React.useState(false);
   const [showRegisterForm, setShowRegisterForm] = React.useState(false);
