@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import Calendar from "react-calendar";
 import RedSessionWindow from "./RedSessionWindow";
 import GreenSessionWindow from "./GreenSessionWindow";
@@ -9,9 +9,9 @@ import EveningRegisterForm from "./EveningRegisterForm";
 function Sessions() {
   const [date, setDate] = useState(new Date());
   const [firstTimeStatus, setFirstTimeStatus] = useState(null);
-const [firstBookedStatus, setFirstBookedStatus] = useState(null);
-const [secondTimeStatus, setSecondTimeStatus] = useState(null);
-const [secondBookedStatus, setSecondBookedStatus] = useState(null);
+  const [firstBookedStatus, setFirstBookedStatus] = useState(null);
+  const [secondTimeStatus, setSecondTimeStatus] = useState(null);
+  const [secondBookedStatus, setSecondBookedStatus] = useState(null);
  
 
   //  format the date in  "YYYY-MM-DD" format
@@ -25,23 +25,32 @@ const [secondBookedStatus, setSecondBookedStatus] = useState(null);
       const formattedDate = formatDateForBackend(day);
       console.log(formattedDate);
       const response = await fetch(
-        `http://localhost:3000/sessions/time:${formattedDate}`
+        `http://localhost:3000/sessions/time/${formattedDate}`
       );
+      if (!response.ok) {
+        throw new Error(`Fetch failed with status ${response.status}`);
+      }
       const data = await response.json();
-      if (data.rows && data.rows.length >= 2) {
-        setFirstTimeStatus(data.rows[0].time);
-        setFirstBookedStatus(data.rows[0].booked);
-        setSecondTimeStatus(data.rows[1].time);
-        setSecondBookedStatus(data.rows[1].booked);
+      console.log(data);
+      
+      
+      if (Array.isArray(data) && data.rows.length >= 2) {
+        setFirstTimeStatus(data[0].time);
+        setFirstBookedStatus(data[0].booked);
+        setSecondTimeStatus(data[1].time);
+        setSecondBookedStatus(data[1].booked);
       } else {
         //  there are not enough elements in data.rows
         console.error("Not enough data rows received");
       }
+      console.log(firstTimeStatus);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data");
     } 
   }
   
+ console.log(firstBookedStatus);
+ console.log(secondBookedStatus);
   let sessionWindow = null;
   if ((firstBookedStatus && secondBookedStatus) === true) {
     sessionWindow = <RedSessionWindow />;
