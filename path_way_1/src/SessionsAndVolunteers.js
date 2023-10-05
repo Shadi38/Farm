@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import RegisterForm from "./RegisterForm";
-import AllSessions from "./AllSessions";
+import Volunteers from "./Volunteers";
+import LoadSessions from "./LoadSessions";
+import BookedSessions from "./BookedSessions";
+function SessionsAndVolunteers() {
 
-function AvailableSessions() {
   const [loadSessions, setLoadSessions] = useState([]);
   const [loadVolunteers, setLoadVolunteers] = useState([]);
-  const[register,setRegister] = useState(false)
-  
-  
+  const[booked,setBooked] = useState(false);
+
 //loading all sessions
   async function loadAllSessions(e) {
     e.preventDefault();
@@ -29,10 +29,7 @@ function AvailableSessions() {
 async function volunteerClickHandeler(e) {
   e.preventDefault();
   try {
-    const response = await fetch(
-       "https://pathway-project-1-server.onrender.com/sessions/volunteers"
-      
-    );
+    const response = await fetch("http://localhost:3000/volunteers");
     if (!response.ok) {
       throw new Error("something went wrong");
     }
@@ -45,14 +42,22 @@ setLoadVolunteers(data);
 //cancel button 
 function cancelClickHandler(params) {
   setLoadVolunteers('');
-  setRegister('');
+  setBooked('');
   setLoadSessions('');
 }
 
-  
-  function registerClickHandler() {
-     setRegister(true);
-     <RegisterForm/>
+   async function bookedSessionHandler(e) {
+    e.preventDefault();
+  try {
+    const response = await fetch("http://localhost:3000/sessions/booked");
+    if (!response.ok) {
+      throw new Error("something went wrong");
+    }
+const data = await response.json();
+setBooked(data);
+  } catch (error) {
+     console.error("Error fetching data:", error);
+  }  
   }
 
   return (
@@ -61,8 +66,8 @@ function cancelClickHandler(params) {
         <button className="btn" onClick={loadAllSessions}>
         All sessions
         </button>
-        <button className="btn" onClick={registerClickHandler}>
-          Register
+        <button className="btn" onClick={bookedSessionHandler}>
+          Booked sessions
         </button>
         <button className="btn" onClick={volunteerClickHandeler}>
           volunteers
@@ -74,36 +79,22 @@ function cancelClickHandler(params) {
         </button>
       </div>
       <div className="mainDiv">
-        <div>
-
-
-
-          
+        <div >
           {loadSessions.length > 0
-            ? loadSessions.map((session, index) => {
-             
-                return (
-                  <div key={index} style={{ width: 400 }}>
-                    <div className="sessionsDiv">
-                      <div>Date: {session.day}</div>
-                      <div>Time: {session.time}</div>
-                      <div>Available: {session.booked}</div>
-                    </div>
-                  </div>
-                );
-              })
+            ? 
+            (<LoadSessions loadSessions={loadSessions}/> )
             : ""}
         </div>
-        {register && (
-             <RegisterForm/>
-        )}
-        <div>
+        {booked.length>0 ? (
+             <BookedSessions booked={booked}/>
+        ):""}
+        <div >
           {loadVolunteers.length > 0
-            ? (<AllSessions loadVolunteers={loadVolunteers} setLoadVolunteers={setLoadVolunteers}/>)
+            ? (<Volunteers loadVolunteers={loadVolunteers} setLoadVolunteers={setLoadVolunteers}/>)
             : ""}
         </div>
       </div>
     </>
   );
 }
-export default AvailableSessions;
+export default SessionsAndVolunteers;

@@ -11,22 +11,22 @@ const { body, validationResult } = require("express-validator");
 const port = process.env.PORT || 3000;
 const { Pool } = require("pg");
 
-// const db = new Pool({
-//   user: "shadifakhri", 
-//   host: "localhost",
-//   database: "database",
-//   password: "",
-//   port: 5432,
-// });
-
 const db = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
-  ssl: process.env.DB_SSL,
+  user: "shadifakhri", 
+  host: "localhost",
+  database: "database",
+  password: "",
+  port: 5432,
 });
+
+// const db = new Pool({
+//   user: process.env.DB_USER,
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_NAME,
+//   password: process.env.DB_PASSWORD,
+//   port: process.env.DB_PORT,
+//   ssl: process.env.DB_SSL,
+// });
 
 db.connect(function (err) {
   if (err) throw err;
@@ -44,6 +44,7 @@ app.get('/sessions',async function (req,res) {
     if (result.rows.length === 0) {
       return res.json([]);
     }
+    console.log(result.rows);
     res.json(result.rows);
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });
@@ -62,6 +63,22 @@ app.get("/volunteers", async function (req, res) {
    return res.status(500).json({ error: "Internal server error" });
  }
 });
+
+//all sessions that booked
+app.get("/sessions/booked", async function (req,res) {
+  try {
+    const result = await db.query("SELECT Day,Time,Booked FROM sessions WHERE Booked = true");
+
+    if (result.rows.length === 0) {
+      return res.json([]);
+    }
+    res.json(result.rows);
+  } catch (error) {
+    return res.status(500).json({ error: "Internal server error" });
+  }
+})
+
+
 // bookings table
 app.get("/bookings", async function (req, res) {
   try {
@@ -97,6 +114,7 @@ app.post(
     const newAddress = req.body.address;
     const newDay = req.body.day;
     const newTime = req.body.time;
+console.log(newDay);
 
     //  Insert the new volunteer into the volunteers table
     const volunteerQuery =
@@ -128,7 +146,8 @@ app.post(
                   // No matching session found
                   res.status(404).json({ error: "Session not found" });
                 } else {
-                  const sessionId = sessionResult.rows[0].id;
+                  const sessionId = sessionResult.rows[0].id +2;
+
                   
                  console.log( sessionId);
                   //  Update the booked status of the session to true
@@ -175,6 +194,28 @@ app.post(
     );
   }
 );
+
+//returning time(morning or evening) and status of their booking(false or true)
+app.get("/sessions/time/:day", async function (req, res) {
+  try {
+    const choosedDay = req.params.day;
+    const result = await db.query(
+      "select time,booked from sessions where day=$1",
+      [choosedDay]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json(`Day not found`);
+    }
+
+    res.json(result.rows); //  result.rows is an array of objects with time and booked propertis
+  } catch (error) {
+    console.error("Error finding session:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 
 // //deleting volunteer with id
 // app.delete("/sessions/volunteers/:id", async function (req, res) {

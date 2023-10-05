@@ -3,44 +3,34 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 
 import "./App.css";
 import Sessions from "./Sessions";
-import AvailableSessions from "./AvailableSessions";
+import SessionsAndVolunteers from "./SessionsAndVolunteers";
+import Header from "./Header";
+
 
 function App() {
   const [showSessions, setShowSessions] = useState(false);
-  const [showAvailableSessions, setShowAvailableSessions] = useState(false);
+  const [showSessionsVolunteers, setShowSessionsVolunteers] = useState(false);
 
   return (
     <Router>
       <div className="App">
-        <header className="header">
-          <h1>Welcome to our Farm</h1>
-        </header>
-
-        <p>
-          Our farm needs volunteers to feed animals. You can register in our
-          available sessions:
-        </p>
+        <Header/>
         <div className="linkDiv">
           <Link
+          className="sessionLink"
             to="/Sessions"
             onClick={() => {
               setShowSessions(true);
-              setShowAvailableSessions(false); // Hide the other content
-            }}
-            style={{
-              color: "#FC4445",
-              marginLeft: 20,
-              textDecoration: "none",
-              fontWeight: "bold",
+              setShowSessionsVolunteers(false); // Hide the other content
             }}
           >
             Sessions
           </Link>
 
           <Link
-            to="/Available_sessions"
+            to="/SessionsAndVolunteers"
             onClick={() => {
-              setShowAvailableSessions(true);
+              setShowSessionsVolunteers(true);
               setShowSessions(false);
             }}
             style={{
@@ -50,14 +40,14 @@ function App() {
               fontWeight: "bold",
             }}
           >
-            Available Sessions
+             Sessions/Volunteers
           </Link>
         </div>
         <Routes>
           {showSessions && <Route path="/Sessions" element={<Sessions />} />}
 
-          {showAvailableSessions && (
-            <Route path="/Available_sessions" element={<AvailableSessions />} />
+          {showSessionsVolunteers && (
+            <Route path="/SessionsAndVolunteers" element={<SessionsAndVolunteers />} />
           )}
         </Routes>
       </div>
