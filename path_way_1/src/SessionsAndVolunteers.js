@@ -13,9 +13,7 @@ function SessionsAndVolunteers() {
     e.preventDefault();
     try {
       const response = await fetch(
-        // "https://pathway-project-1-server.onrender.com/sessions"
-        "http://localhost:3000/sessions"
-      );
+         "https://pathway-project-1-server.onrender.com/sessions");
       if (!response.ok) {
         throw new Error("something went wrong");
       }
@@ -29,7 +27,9 @@ function SessionsAndVolunteers() {
 async function volunteerClickHandeler(e) {
   e.preventDefault();
   try {
-    const response = await fetch("http://localhost:3000/volunteers");
+    const response = await fetch(
+      "https://pathway-project-1-server.onrender.com/volunteers"
+    );
     if (!response.ok) {
       throw new Error("something went wrong");
     }
@@ -49,7 +49,9 @@ function cancelClickHandler(params) {
    async function bookedSessionHandler(e) {
     e.preventDefault();
   try {
-    const response = await fetch("http://localhost:3000/sessions/booked");
+    const response = await fetch(
+      "https://pathway-project-1-server.onrender.com/sessions/booked"
+    );
     if (!response.ok) {
       throw new Error("something went wrong");
     }

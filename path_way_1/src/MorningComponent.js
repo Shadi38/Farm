@@ -9,14 +9,11 @@ function MorningComponent() {
   const [registerMessage, setRegisterMessage] = useState("");
   const [registerStatus, setRegisterStatus] = useState(false);
 
-  //pathway-project-1-server.onrender.com
+  
   //adding new volunteer
   function addClickHandeler(e) {
     e.preventDefault();
-    // set tile colour to orange
-    // setSelectedColor("orange");
-
-    const newVolunteer = {
+     const newVolunteer = {
       name: name,
       lastname: lastname,
       address: address,
@@ -25,7 +22,7 @@ function MorningComponent() {
       booked: true,
     };
     console.log(newVolunteer);
-    fetch("http://localhost:3000/sessions/volunteers", {
+    fetch("https://pathway-project-1-server.onrender.com/sessions/volunteers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
