@@ -6,6 +6,37 @@ CREATE TABLE sessions (
 );
 
 INSERT INTO sessions (Day, Time, Booked)
+VALUES ('Oct 01, 2023','Morning',true);
+
+INSERT INTO sessions (Day, Time, Booked)
+VALUES ('Oct 01, 2023','Evening',true);
+
+INSERT INTO sessions (Day, Time, Booked)
+VALUES ('Oct 02, 2023','Morning',true);
+
+INSERT INTO sessions (Day, Time, Booked)
+VALUES ('Oct 02, 2023','Evening',true);
+
+INSERT INTO sessions (Day, Time, Booked)
+VALUES ('Oct 03, 2023','Morning',true);
+
+INSERT INTO sessions (Day, Time, Booked)
+VALUES ('Oct 03, 2023','Evening',true);
+
+INSERT INTO sessions (Day, Time, Booked)
+VALUES ('Oct 04, 2023','Morning',true);
+
+INSERT INTO sessions (Day, Time, Booked)
+VALUES ('Oct 04, 2023','Evening',true);
+
+INSERT INTO sessions (Day, Time, Booked)
+VALUES ('Oct 05, 2023','Morning',true);
+
+INSERT INTO sessions (Day, Time, Booked)
+VALUES ('Oct 05, 2023','Evening',true);
+
+
+INSERT INTO sessions (Day, Time, Booked)
 VALUES ('Oct 06, 2023','Morning',true);
 
 INSERT INTO sessions (Day, Time, Booked)
