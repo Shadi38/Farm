@@ -19,13 +19,18 @@ body{
   font-size: calc(10px + 2vmin);
   color:#FC4445;
 }
-.sessionLink{
+.Link{
 color: #FC4445;
 margin-left: 20px;
 text-decoration: none;
 font-weight:bold ;
 }
-
+.linkSessionsVolunteers{
+color: "#FC4445";
+margin-left: 20;
+text-decoration: "none";
+font-weight: "bold";
+}
 
 @keyframes App-logo-spin {
   from {

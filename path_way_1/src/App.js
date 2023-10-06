@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-
 import "./App.css";
 import Sessions from "./Sessions";
 import SessionsAndVolunteers from "./SessionsAndVolunteers";
@@ -14,10 +13,10 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header/>
+        <Header />
         <div className="linkDiv">
           <Link
-          className="sessionLink"
+            className="Link"
             to="/Sessions"
             onClick={() => {
               setShowSessions(true);
@@ -28,26 +27,30 @@ function App() {
           </Link>
 
           <Link
+            className="Link"
             to="/SessionsAndVolunteers"
             onClick={() => {
               setShowSessionsVolunteers(true);
               setShowSessions(false);
             }}
-            style={{
-              color: "#FC4445",
-              marginLeft: 20,
-              textDecoration: "none",
-              fontWeight: "bold",
-            }}
+            // style={{
+            //   color: "#FC4445",
+            //   marginLeft: 20,
+            //   textDecoration: "none",
+            //   fontWeight: "bold",
+            // }}
           >
-             Sessions/Volunteers
+            Sessions/Volunteers
           </Link>
         </div>
         <Routes>
           {showSessions && <Route path="/Sessions" element={<Sessions />} />}
 
           {showSessionsVolunteers && (
-            <Route path="/SessionsAndVolunteers" element={<SessionsAndVolunteers />} />
+            <Route
+              path="/SessionsAndVolunteers"
+              element={<SessionsAndVolunteers />}
+            />
           )}
         </Routes>
       </div>
