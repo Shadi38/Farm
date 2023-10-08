@@ -25,27 +25,18 @@ function App() {
           >
             Sessions
           </Link>
-
           <Link
             className="Link"
             to="/SessionsAndVolunteers"
             onClick={() => {
               setShowSessionsVolunteers(true);
               setShowSessions(false);
-            }}
-            // style={{
-            //   color: "#FC4445",
-            //   marginLeft: 20,
-            //   textDecoration: "none",
-            //   fontWeight: "bold",
-            // }}
-          >
+            }} >
             Sessions/Volunteers
           </Link>
         </div>
         <Routes>
           {showSessions && <Route path="/Sessions" element={<Sessions />} />}
-
           {showSessionsVolunteers && (
             <Route
               path="/SessionsAndVolunteers"

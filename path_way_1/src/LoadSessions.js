@@ -20,7 +20,7 @@ function LoadSessions(props) {
                     <div className="volunteersDiv">
                       <div>Date: {formatedDay}</div>
                       <div>Time: {session.time}</div>
-                      {/* <div>Available: {session.booked}</div> */}
+                     
                     </div>
                   </div>
                 );

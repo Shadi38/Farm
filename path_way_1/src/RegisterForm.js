@@ -1,7 +1,8 @@
 import React,{useState} from "react";
 
 function RegisterForm(props) {
-  // const { selectedColor, setSelectedColor } = props;
+   const {morning,setMorning,evening,setEvening } = props;
+  
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
   const [address, setAddress] = useState("");
@@ -9,7 +10,6 @@ function RegisterForm(props) {
   const [time, setTime] = useState("evening");
   const [registerMessage, setRegisterMessage] = useState("");
   const [registerStatus, setRegisterStatus] = useState(false);
-
   
   //adding new volunteer
   function addClickHandeler(e) {
@@ -101,8 +101,8 @@ function RegisterForm(props) {
               setTime(selectedsession);
             }}
           >
-            <option value={"morning"}>Morning</option>
-            <option value={"evening"}>Evening</option>
+            <option value={"morning"} disabled={morning}>Morning</option>
+            <option value={"evening"} disabled={evening}>Evening</option>
           </select>
         </div>
         <div className="input-group">

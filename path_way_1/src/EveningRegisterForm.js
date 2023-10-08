@@ -9,6 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import EveningComponent from "./EveningComponent";
+import RegisterForm from "./RegisterForm";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -70,7 +71,8 @@ export default function GreenSessionWindow() {
         </DialogContent>
         <DialogActions>
           {showRegisterForm ? (
-            <EveningComponent/>
+            // <EveningComponent/>
+            <RegisterForm/>
           ) : (
             <Button autoFocus onClick={handleRegisterClick}>
               Register

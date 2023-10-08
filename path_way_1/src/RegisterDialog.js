@@ -20,7 +20,10 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function GreenSessionWindow() {
+export default function RegisterDialog(props) {
+  
+    const {morning, setMorning, evening, setEvening} = props;
+ 
   const [open, setOpen] = React.useState(false);
   const [showRegisterForm, setShowRegisterForm] = React.useState(false);
 
@@ -63,12 +66,13 @@ export default function GreenSessionWindow() {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <Typography gutterBottom>Morning session is available</Typography>
+          <Typography gutterBottom>Morning booked: {morning}</Typography>
+          <Typography gutterBottom>{`Evening booked: ${evening}`}</Typography>
         </DialogContent>
         <DialogActions>
           {showRegisterForm ? (
             // <MorningComponent/>
-            <RegisterForm/>
+            <RegisterForm />
           ) : (
             <Button autoFocus onClick={handleRegisterClick}>
               Register
