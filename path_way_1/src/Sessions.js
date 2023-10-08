@@ -28,9 +28,9 @@ function Sessions() {
       // Format the selected date before sending it to the backend
       const formattedDate = formatDateForBackend(day);
       console.log(formattedDate);
-      // `https://pathway-project-1-server.onrender.com/sessions/time/${formattedDate}`;
+      // ;
       const response = await fetch(
-        `http://localhost:3001/sessions/time/${formattedDate}`
+        `https://pathway-project-1-server.onrender.com/sessions/time/${formattedDate}`
       );
       if (!response.ok) {
         throw new Error("Fetch failed ");
