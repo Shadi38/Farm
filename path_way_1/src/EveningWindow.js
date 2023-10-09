@@ -8,6 +8,7 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
+//import EveningComponent from "./EveningComponent";
 import RegisterForm from "./RegisterForm";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -19,9 +20,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function GreenSessionWindow(props) {
-   const { selectedColor, setSelectedColor } =  props ;
-
+export default function MorningEveningWindow(props) {
+ 
+const [morning, setMorning] = React.useState;
   const [open, setOpen] = React.useState(false);
   const [showRegisterForm, setShowRegisterForm] = React.useState(false);
 
@@ -33,10 +34,10 @@ export default function GreenSessionWindow(props) {
     setOpen(false);
     setShowRegisterForm(false);
   };
-
+  
   const handleRegisterClick = () => {
     setShowRegisterForm(true);
-    
+    setMorning(true);
   };
 
   return (
@@ -66,22 +67,20 @@ export default function GreenSessionWindow(props) {
         </IconButton>
         <DialogContent dividers>
           <Typography gutterBottom>
-            Morning and Evening sessions are available
+           Evening session is available
           </Typography>
         </DialogContent>
         <DialogActions>
           {showRegisterForm ? (
-            <RegisterForm
-              selectedColor={selectedColor}
-              setSelectedColor={setSelectedColor}
-            />
+            // <EveningComponent/>
+            <RegisterForm/>
           ) : (
             <Button autoFocus onClick={handleRegisterClick}>
-            Register
+              Register
             </Button>
           )}
         </DialogActions>
       </BootstrapDialog>
     </div>
-  )
+  );
 }

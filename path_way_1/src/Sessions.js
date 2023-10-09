@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
-import RedSessionWindow from "./RedSessionWindow";
-import GreenSessionWindow from "./GreenSessionWindow";
+import BookedWindow from "./BookedWindow";
+import MorningEveningWindow from "./MorningEveningwindow";
 import { format } from "date-fns";
-import MorningRegisterForm from "./MorningRegisterForm";
-import EveningRegisterForm from "./EveningRegisterForm";
+import MorningWindow from "./MorningWindow";
+import EveningWindow from "./EveningWindow";
 //import RegisterDialog from "./RegisterDialog";
-
 
 function Sessions() {
   const [date, setDate] = useState(new Date());
@@ -28,7 +27,7 @@ function Sessions() {
       // Format the selected date before sending it to the backend
       const formattedDate = formatDateForBackend(day);
       console.log(formattedDate);
-      
+
       const response = await fetch(
         `https://pathway-project-1-server.onrender.com/sessions/time/${formattedDate}`
       );
@@ -39,14 +38,14 @@ function Sessions() {
       const data = await response.json();
       console.log(data);
 
-       if (data.length === 2) {
-      //   for (let i = 0; i < data.length; i++) {
-      //     if (data[i].time === "Evening") {
-      //       setEvening(data[i].time.booked);
-      //     } else if (data[i].time.toLowerCase() === "morning") {
-      //       setMorning(data[i].time.booked);
-      //     }
-      //   }
+      if (data.length === 2) {
+        //   for (let i = 0; i < data.length; i++) {
+        //     if (data[i].time === "Evening") {
+        //       setEvening(data[i].time.booked);
+        //     } else if (data[i].time.toLowerCase() === "morning") {
+        //       setMorning(data[i].time.booked);
+        //     }
+        //   }
 
         // sessionWindow = (
         //   <RegisterDialog
@@ -73,10 +72,10 @@ function Sessions() {
   console.log(secondBookedStatus);
   let sessionWindow = null;
   if ((firstBookedStatus && secondBookedStatus) === true) {
-    sessionWindow = <RedSessionWindow />;
+    sessionWindow = <BookedWindow />;
   }
   if (firstBookedStatus === false && secondBookedStatus === false) {
-    sessionWindow = <GreenSessionWindow />;
+    sessionWindow = <MorningEveningWindow />;
   }
   if (
     (firstBookedStatus === false &&
@@ -86,7 +85,9 @@ function Sessions() {
       secondTimeStatus === "Morning" &&
       firstBookedStatus === true)
   ) {
-    sessionWindow = <MorningRegisterForm morning={morning} setMorning={setMorning}/>;
+    sessionWindow = (
+      <MorningWindow evening={evening} setEvening={setEvening} />
+    );
   }
   if (
     (firstBookedStatus === false &&
@@ -96,7 +97,9 @@ function Sessions() {
       secondTimeStatus === "Evening" &&
       firstBookedStatus === true)
   ) {
-    sessionWindow = <EveningRegisterForm evening={evening} setEvening={setEvening} />;
+    sessionWindow = (
+      <EveningWindow morning={morning} setMorning={setMorning} />
+    );
   }
   return (
     <div>

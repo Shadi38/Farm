@@ -16,7 +16,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function RedSessionWindow() {
+export default function BookedWindow() {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -36,10 +36,7 @@ export default function RedSessionWindow() {
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        
-       
-        <DialogContent dividers>
-          
+        <DialogContent dividers> 
           <Typography gutterBottom>
             All sessions are booked
           </Typography>
