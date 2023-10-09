@@ -101,8 +101,10 @@ function RegisterForm(props) {
               setTime(selectedsession);
             }}
           >
-            <option value={"morning"} disabled={morning}>Morning</option>
-            <option value={"evening"} disabled={evening}>Evening</option>
+            <option value={"morning"} disabled={morning === true}>
+             Morning
+            </option>
+            <option value={"evening"} disabled={evening === true}></option>
           </select>
         </div>
         <div className="input-group">
