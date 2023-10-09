@@ -22,7 +22,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 export default function MorningEveningWindow(props) {
  
-const [morning, setMorning] = React.useState;
+const [morning, setMorning] = props;
   const [open, setOpen] = React.useState(false);
   const [showRegisterForm, setShowRegisterForm] = React.useState(false);
 
@@ -34,7 +34,7 @@ const [morning, setMorning] = React.useState;
     setOpen(false);
     setShowRegisterForm(false);
   };
-  
+
   const handleRegisterClick = () => {
     setShowRegisterForm(true);
     setMorning(true);
@@ -73,7 +73,7 @@ const [morning, setMorning] = React.useState;
         <DialogActions>
           {showRegisterForm ? (
             // <EveningComponent/>
-            <RegisterForm/>
+            <RegisterForm morning={morning}/>
           ) : (
             <Button autoFocus onClick={handleRegisterClick}>
               Register

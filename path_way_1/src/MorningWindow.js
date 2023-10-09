@@ -21,7 +21,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 export default function MorningEveningWindow(props) {
-  const [evening, setEvening] = React.useState
+  const [evening, setEvening] = props;
   const [open, setOpen] = React.useState(false);
   const [showRegisterForm, setShowRegisterForm] = React.useState(false);
 
