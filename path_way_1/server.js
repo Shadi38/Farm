@@ -322,17 +322,18 @@ app.get("/sessions/time/:day", async function (req, res) {
 
 //deleting volunteer with id
 app.delete("/sessions/volunteers/:id", async function (req, res) {
-  const volunteerId = parseInt(req.params.id); 
+  const volunteerId = req.params.id; 
   try { 
-    await db.query("DELETE FROM volunteers WHERE id=$1", [volunteerId]);
-    await db.none(
+    
+    await db.query(
        "UPDATE bookings SET volunteers_id = NULL WHERE volunteers_id = $1",
        [volunteerId]
      );
-    await db.none(
+    await db.query(
   "UPDATE sessions SET Booked = false WHERE id IN (SELECT sessions_id FROM bookings WHERE volunteers_id = $1)",
   [volunteerId]
 );
+await db.query("DELETE FROM volunteers WHERE id=$1", [volunteerId]);
 res.status(200).json(volunteerId);
   } catch (error) {
     console.error("Error deleting volunteer:", error);

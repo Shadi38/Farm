@@ -29,7 +29,8 @@ async function volunteerClickHandeler(e) {
   e.preventDefault();
   try {
     const response = await fetch(
-       "https://pathway-project-1-server.onrender.com/volunteers"
+        "https://pathway-project-1-server.onrender.com/volunteers"
+      
     );
     if (!response.ok) {
       throw new Error("something went wrong");
