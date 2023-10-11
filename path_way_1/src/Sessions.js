@@ -39,22 +39,7 @@ function Sessions() {
       console.log(data);
 
       if (data.length === 2) {
-        //   for (let i = 0; i < data.length; i++) {
-        //     if (data[i].time === "Evening") {
-        //       setEvening(data[i].time.booked);
-        //     } else if (data[i].time.toLowerCase() === "morning") {
-        //       setMorning(data[i].time.booked);
-        //     }
-        //   }
-
-        // sessionWindow = (
-        //   <RegisterDialog
-        //     morning={morning}
-        //     setMorning={setMorning}
-        //     evening={evening}
-        //     setEvening={setEvening}
-        //   />
-        // );
+        
         setFirstTimeStatus(data[0].time);
         setFirstBookedStatus(data[0].booked);
         setSecondTimeStatus(data[1].time);
@@ -85,9 +70,7 @@ function Sessions() {
       secondTimeStatus === "Morning" &&
       firstBookedStatus === true)
   ) {
-    sessionWindow = (
-      <MorningWindow evening={evening} setEvening={setEvening} />
-    );
+    sessionWindow = <MorningWindow evening={evening} setEvening={setEvening} />;
   }
   if (
     (firstBookedStatus === false &&
@@ -97,9 +80,7 @@ function Sessions() {
       secondTimeStatus === "Evening" &&
       firstBookedStatus === true)
   ) {
-    sessionWindow = (
-      <EveningWindow morning={morning} setMorning={setMorning} />
-    );
+    sessionWindow = <EveningWindow morning={morning} setMorning={setMorning} />;
   }
   return (
     <div>
@@ -107,7 +88,7 @@ function Sessions() {
         <Calendar
           onChange={setDate}
           value={date}
-          onClickDay={(value, event) => {
+          onClickDay={(value) => {
             handleChooseTime(value);
           }}
         />

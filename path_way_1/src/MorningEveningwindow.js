@@ -40,7 +40,8 @@ export default function MorningEveningRegisterForm(props) {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+     
+      <Button variant="contained" style={{color:"black", backgroundColor:"white", marginLeft:130}} onClick={handleClickOpen}>
         Book session
       </Button>
       <BootstrapDialog
