@@ -289,22 +289,7 @@ db.query(volunteerQuery,[name],(volunteerErr, volunteerResult) => {
                       }
                     }
                   );
-                } 
-                      
-                      
-                     
-
-// db.query(sessionQuery,[newDay,newTime],(updateErr, updateResult) => {
-//                       if (updateErr) {
-//                         console.error(updateErr);
-//                         res
-//                           .status(500)
-//                           .json({ error: "Internal Server Error" });
-//                       }if (sessionResult.rows.length === 0) {
-//                         // No matching session found
-//                         res.status(404).json({ error: "Session not found" });
-//                       } else {
-//                       }})
+                }
                        });
 });
 
@@ -335,20 +320,25 @@ app.get("/sessions/time/:day", async function (req, res) {
 
 
 
-// //deleting volunteer with id
-// app.delete("/sessions/volunteers/:id", async function (req, res) {
-//   const volunteerId = req.params.id;
-//   try {
-//     const result = await db.query("DELETE FROM volunteers WHERE id=$1", [volunteerId]);
-//     if (result.rowCount === 0) {
-//       return res.status(404).json(`Volunteer with id ${volunteerId} not found`);
-//     }
-//     res.json(volunteerId);
-//   } catch (error) {
-//     console.error("Error deleting volunteer:", error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
+//deleting volunteer with id
+app.delete("/sessions/volunteers/:id", async function (req, res) {
+  const volunteerId = parseInt(req.params.id); 
+  try { 
+    await db.query("DELETE FROM volunteers WHERE id=$1", [volunteerId]);
+    await db.none(
+       "UPDATE bookings SET volunteers_id = NULL WHERE volunteers_id = $1",
+       [volunteerId]
+     );
+    await db.none(
+  "UPDATE sessions SET Booked = false WHERE id IN (SELECT sessions_id FROM bookings WHERE volunteers_id = $1)",
+  [volunteerId]
+);
+res.status(200).json(volunteerId);
+  } catch (error) {
+    console.error("Error deleting volunteer:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
