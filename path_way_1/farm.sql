@@ -15,36 +15,36 @@ INSERT INTO sessions (Day, Time, Booked)
 VALUES ('Oct 02, 2023','Morning',true);
 
 INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 02, 2023','Evening',true);
+VALUES ('Oct 02, 2023','Evening',false);
 
 INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 03, 2023','Morning',true);
+VALUES ('Oct 03, 2023','Morning',false);
 
 INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 03, 2023','Evening',true);
+VALUES ('Oct 03, 2023','Evening',false);
 
 INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 04, 2023','Morning',true);
+VALUES ('Oct 04, 2023','Morning',false);
 
 INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 04, 2023','Evening',true);
+VALUES ('Oct 04, 2023','Evening',false);
 
 INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 05, 2023','Morning',true);
+VALUES ('Oct 05, 2023','Morning',false);
 
 INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 05, 2023','Evening',true);
-
-
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 06, 2023','Morning',true);
-
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 06, 2023','Evening', true);
+VALUES ('Oct 05, 2023','Evening',false);
 
 
 INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 07, 2023','Morning',true);
+VALUES ('Oct 06, 2023','Morning',false);
+
+INSERT INTO sessions (Day, Time, Booked)
+VALUES ('Oct 06, 2023','Evening', false);
+
+
+INSERT INTO sessions (Day, Time, Booked)
+VALUES ('Oct 07, 2023','Morning',false);
 
 INSERT INTO sessions (Day, Time, Booked)
 VALUES ('Oct 07, 2023','Evening', false);
