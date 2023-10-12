@@ -5,14 +5,17 @@ function Volunteers(props) {
 
   //Deleting volunteer's information specified by id and deleting booked session related the volunteer
   function deleteClickHandler(volunteer) {
-    ////https://pathway-project-1-server.onrender.com/sessions/volunteers/${volunteer.id}
-    fetch(`http://localhost:3000/ sessions/volunteers/${volunteer.id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(volunteer),
-    })
+    
+    fetch(
+      `https://pathway-project-1-server.onrender.com/ sessions/volunteers/${volunteer.id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(volunteer),
+      }
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to delete volunteer");
