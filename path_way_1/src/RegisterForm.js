@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 
 function RegisterForm(props) {
 
@@ -15,14 +15,15 @@ function RegisterForm(props) {
   const [registerStatus, setRegisterStatus] = useState(false);
 
   //loading name and lastName of old volunteers
-   fetch("https://pathway-project-1-server.onrender.com/volunteers")
-     .then((response) => {
-       if (!response.ok) {
-         throw new Error("can't find volunteer");
-       }
-       return response.json();
-     })
-     .then((data) => setVolunteer(data));
+  useEffect(()=>{fetch("https://pathway-project-1-server.onrender.com/volunteers")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("can't find volunteer");
+      }
+      return response.json();
+    })
+    .then((data) => setVolunteer(data))},[])
+   
 
   //adding new volunteer for new session
   function addClickHandelerNewVolunteer(e) {
