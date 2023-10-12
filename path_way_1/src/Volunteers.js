@@ -5,9 +5,9 @@ function Volunteers(props) {
 
   //Deleting volunteer's information specified by id and deleting booked session related the volunteer
   function deleteClickHandler(volunteer) {
-    
+    //http://localhost:3000/sessions/volunteers/${volunteer.id}
     fetch(
-      `https://pathway-project-1-server.onrender.com/ sessions/volunteers/${volunteer.id}`,
+      `https://pathway-project-1-server.onrender.com/sessions/volunteers/${volunteer.id}`,
       {
         method: "DELETE",
         headers: {
