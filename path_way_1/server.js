@@ -131,11 +131,11 @@ app.post(
           res.status(500).json({ error: "Internal Server Error" });
         } else {
           const volunteerId = volunteerResult.rows[0].id;
-
+console.log(volunteerId);
           //  Find a session in the sessions table based on day and time
           const sessionQuery =
             "SELECT id FROM sessions WHERE Day = $1 AND Time = $2";
-
+console.log(sessionQuery);
           db.query(
             sessionQuery,
             [newDay, newTime],
