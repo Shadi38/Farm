@@ -40,8 +40,11 @@ export default function MorningEveningRegisterForm(props) {
 
   return (
     <div>
-     
-      <Button variant="contained" style={{color:"black", backgroundColor:"white", marginLeft:130}} onClick={handleClickOpen}>
+      <Button
+        variant="contained"
+        style={{ color: "#FC4445", backgroundColor: "white", marginLeft: 130 }}
+        onClick={handleClickOpen}
+      >
         Book session
       </Button>
       <BootstrapDialog

@@ -35,8 +35,7 @@ function RegisterForm(props) {
       time: time,
       booked: true,
     };
-    console.log(newVolunteer);
-   
+    //"http://localhost:3000/sessions/newVolunteer"
     fetch(
       "https://pathway-project-1-server.onrender.com/sessions/newVolunteer",
       {
@@ -55,7 +54,6 @@ function RegisterForm(props) {
         setRegisterStatus(true);
       });
   }
-
   //adding old volunteer for new session
   function addClickHandelerOldVolunteer(e) {
     e.preventDefault();
@@ -65,7 +63,6 @@ function RegisterForm(props) {
       time: time,
       booked: true,
     };
-    console.log(oldVolunteer);
     fetch(
       "https://pathway-project-1-server.onrender.com/sessions/newVolunteer",
       {
@@ -73,7 +70,6 @@ function RegisterForm(props) {
         headers: {
           "Content-Type": "application/json",
         },
-
         body: JSON.stringify(oldVolunteer),
       }.then(response=>response.json())
       .then(data=>{
@@ -81,16 +77,14 @@ function RegisterForm(props) {
         setRegisterMessage(data);
         setRegisterStatus(true);
       })
-    );
-    
-
-    
+    ); 
   }
-
   return (
-    <div style={{ width: 380 }}>
+    <div className="form-container">
       <form className="formDiv" onSubmit={addClickHandelerNewVolunteer}>
-        <h2>New valunteer</h2>
+        <h2 className="form-header" id="headerH2">
+          New volunteer
+        </h2>
         <div className="input-group">
           <label htmlFor="name">Name</label>
           <input
@@ -164,6 +158,7 @@ function RegisterForm(props) {
               borderRadius: 5,
               backgroundColor: "rgb(248, 230, 209)",
               color: "#FC4445",
+              borderStyle: "none",
             }}
             type="submit"
           >
@@ -177,7 +172,9 @@ function RegisterForm(props) {
         )}
       </form>
       <form className="formDiv" onSubmit={addClickHandelerOldVolunteer}>
-        <h2>Old valunteer</h2>
+        <h2 className="form-header" id="headerH2">
+          Old volunteer
+        </h2>
         <div className="input-group">
           <label htmlFor="name">Name</label>
           <select
@@ -192,10 +189,7 @@ function RegisterForm(props) {
               Select a volunteer
             </option>
             {volunteer.map((eachVolunteer, index) => (
-              <option
-                key={index}
-                value={eachVolunteer.name}
-              >
+              <option key={index} value={eachVolunteer.name}>
                 {eachVolunteer.name + " " + eachVolunteer.lastname}
               </option>
             ))}
@@ -239,6 +233,7 @@ function RegisterForm(props) {
               borderRadius: 5,
               backgroundColor: "rgb(248, 230, 209)",
               color: "#FC4445",
+              borderStyle: "none",
             }}
             type="submit"
           >

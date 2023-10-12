@@ -20,7 +20,6 @@ function formatDateForFrontEnd(selectedDate) {
               <div className="volunteersDiv">
                 <div>{formatedDay}</div>
                 <div>{bookedSessions.time}</div>
-                ////////
               </div>
             </div>
           );

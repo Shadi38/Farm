@@ -47,12 +47,13 @@ function cancelClickHandler(params) {
   setBooked('');
   setLoadSessions('');
 }
-
+//loading booked sessions with volunteers
    async function bookedSessionHandler(e) {
     e.preventDefault();
   try {
     const response = await fetch(
        "https://pathway-project-1-server.onrender.com/sessions/booked"
+      // "http://localhost:3000/sessions/booked"
     );
     if (!response.ok) {
       throw new Error("something went wrong");
