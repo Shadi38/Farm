@@ -134,7 +134,7 @@ app.post(
 console.log(volunteerId);
           //  Find a session in the sessions table based on day and time
           const sessionQuery =
-            "SELECT id FROM sessions WHERE Day = $1 AND Time = $2";
+            "SELECT id FROM sessions WHERE day = $1 AND time = $2";
 console.log(sessionQuery);
           db.query(
             sessionQuery,
