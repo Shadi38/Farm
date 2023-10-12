@@ -75,6 +75,7 @@ app.get("/sessions/booked", async function (req, res) {
       return res.json([]);
     }
     res.json(result.rows);
+    console.log(result.rows);
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });
   }
@@ -115,7 +116,7 @@ app.post(
     const newAddress = req.body.address;
     const newDay = req.body.day;
     const newTime = req.body.time;
-    console.log(newDay);
+   
 
     //   registering new session by new volunteer
     const volunteerQuery =
@@ -147,7 +148,7 @@ app.post(
                   // No matching session found
                   res.status(404).json({ error: "Session not found" });
                 } else {
-                  const sessionId = sessionResult.rows[0].id + 2;
+                  const sessionId = sessionResult.rows[0].id ;
 
                   //  Update the booked status of the session to true
                   const updateSessionQuery =
@@ -234,8 +235,8 @@ app.post(
                 // No matching session found
                 res.status(404).json({ error: "Session not found" });
               } else {
-                const sessionId = sessionResult.rows[0].id + 2;
-
+                // const sessionId = sessionResult.rows[0].id + 2;
+const sessionId = sessionResult.rows[0].id;
                 //  Update the booked status of the session to true
                 const updateSessionQuery =
                   "UPDATE sessions SET booked = true WHERE id = $1";

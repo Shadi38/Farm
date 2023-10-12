@@ -57,12 +57,15 @@ function RegisterForm(props) {
   //adding old volunteer for new session
   function addClickHandelerOldVolunteer(e) {
     e.preventDefault();
-    const oldVolunteer = {
-      name: name,
-      day: day,
-      time: time,
-      booked: true,
-    };
+    //changed the format of day according to database
+     const formattedDay = `${day}T00:00:00.000Z`;
+
+     const oldVolunteer = {
+       name: name,
+       day: formattedDay, 
+       time: time,
+       booked: true,
+     };
     fetch(
       "https://pathway-project-1-server.onrender.com/sessions/newVolunteer",
       {
