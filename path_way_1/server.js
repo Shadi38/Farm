@@ -54,11 +54,12 @@ app.get("/sessions", async function (req, res) {
 app.get("/volunteers", async function (req, res) {
   try {
     const result = await db.query("SELECT * FROM volunteers");
-
+ console.log(result.rows);
     if (result.rows.length === 0) {
       return res.json([]);
     }
     res.json(result.rows);
+   
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });
   }

@@ -10,7 +10,7 @@ function RegisterForm(props) {
   const [lastname, setLastname] = useState("");
   const [address, setAddress] = useState("");
   const [day, setDay] = useState("");
-  const [time, setTime] = useState("evening");
+  const [time, setTime] = useState("Evening");
   const [registerMessage, setRegisterMessage] = useState("");
   const [registerStatus, setRegisterStatus] = useState(false);
 
