@@ -35,6 +35,7 @@ function RegisterForm(props) {
       time: time,
       booked: true,
     };
+    console.log(newVolunteer);
     //"http://localhost:3000/sessions/newVolunteer"
     fetch(
       "https://pathway-project-1-server.onrender.com/sessions/newVolunteer",
@@ -57,30 +58,28 @@ function RegisterForm(props) {
   //adding old volunteer for new session
   function addClickHandelerOldVolunteer(e) {
     e.preventDefault();
-    //changed the format of day according to database
-     const formattedDay = `${day}T00:00:00.000Z`;
-
      const oldVolunteer = {
        name: name,
-       day: formattedDay, 
+       day: day, 
        time: time,
        booked: true,
      };
     fetch(
-      "https://pathway-project-1-server.onrender.com/sessions/newVolunteer",
+      "https://pathway-project-1-server.onrender.com/sessions/oldVolunteer",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(oldVolunteer),
-      }.then(response=>response.json())
-      .then(data=>{
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
         console.log(data);
         setRegisterMessage(data);
         setRegisterStatus(true);
-      })
-    ); 
+      }); 
   }
   return (
     <div className="form-container">
