@@ -69,7 +69,8 @@ app.get("/volunteers", async function (req, res) {
 app.get("/sessions/booked", async function (req, res) {
   try {
     const result = await db.query(
-      "SELECT Day,Time,Booked FROM sessions WHERE Booked = true"
+     
+      "select s.id,day,time,b.id IS NOT NULL AS booked  FROM sessions as s left join bookings as b on s.id=b.sessions_id where booked=true"
     );
 
     if (result.rows.length === 0) {
