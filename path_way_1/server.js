@@ -285,7 +285,7 @@ app.get("/sessions/time/:day", async function (req, res) {
   try {
     const choosedDay = req.params.day;
     const result = await db.query(
-      "select time,booked from sessions where day=$1",
+      "select s.id,day,time,b.id IS NOT NULL AS booked  FROM sessions as s left join bookings as b on s.id=b.sessions_id WHERE day='$1'",
       [choosedDay]
     );
 
@@ -300,24 +300,67 @@ app.get("/sessions/time/:day", async function (req, res) {
   }
 });
 
+// //deleting volunteer with id
+// app.delete("/sessions/volunteers/:id", async function (req, res) {
+//   const volunteerId = req.params.id;
+//   try {
+//     await db.query(
+//       "UPDATE bookings SET volunteers_id = NULL WHERE volunteers_id = $1",
+//       [volunteerId]
+//     );
+//     await db.query(
+//       "UPDATE sessions SET Booked = false WHERE id IN (SELECT sessions_id FROM bookings WHERE volunteers_id = $1)",
+//       [volunteerId]
+//     );
+//     await db.query("DELETE FROM volunteers WHERE id=$1", [volunteerId]);
+//     res.status(200).json(volunteerId);
+    
+//     await db.query(
+//       "DELETE FROM bookings WHERE sessions_id IN (SELECT sessions_id FROM bookings WHERE volunteers_id IS NULL AND sessions_id IN (SELECT sessions_id FROM bookings WHERE volunteers_id = $1))",
+//       [volunteerId]
+//     );
+
+    
+//   } catch (error) {
+//     console.error("Error deleting volunteer:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+
 //deleting volunteer with id
 app.delete("/sessions/volunteers/:id", async function (req, res) {
   const volunteerId = req.params.id;
   try {
     await db.query(
-      "UPDATE bookings SET volunteers_id = NULL WHERE volunteers_id = $1",
-      [volunteerId]
-    );
-    await db.query(
       "UPDATE sessions SET Booked = false WHERE id IN (SELECT sessions_id FROM bookings WHERE volunteers_id = $1)",
       [volunteerId]
     );
     await db.query("DELETE FROM volunteers WHERE id=$1", [volunteerId]);
+    await db.query("SELECT sessions_id FROM bookings WHERE volunteers_id=$", [
+      volunteerId,
+    ]);
+
+    await db.query(
+      "UPDATE bookings SET volunteers_id = NULL WHERE volunteers_id = $1",
+      [volunteerId]
+    );
+    
+    
     res.status(200).json(volunteerId);
+    
+    await db.query(
+      "DELETE FROM bookings WHERE sessions_id IN (SELECT sessions_id FROM bookings WHERE volunteers_id IS NULL AND sessions_id IN (SELECT sessions_id FROM bookings WHERE volunteers_id = $1))",
+      [volunteerId]
+    );
+
+    
   } catch (error) {
     console.error("Error deleting volunteer:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
