@@ -416,29 +416,10 @@ app.get("/sessions/time/:day", async function (req, res) {
 app.delete("/sessions/volunteers/:id", async function (req, res) {
   const volunteerId = req.params.id;
   try {
-    await db.query(
-      "UPDATE sessions SET Booked = false WHERE id IN (SELECT sessions_id FROM bookings WHERE volunteers_id = $1)",
-      [volunteerId]
-    );
-    await db.query("DELETE FROM volunteers WHERE id=$1", [volunteerId]);
-    await db.query("SELECT sessions_id FROM bookings WHERE volunteers_id=$", [
+     await db.query("SELECT * FROM bookings WHERE volunteers_id=$1", [
       volunteerId,
     ]);
-
-    await db.query(
-      "UPDATE bookings SET volunteers_id = NULL WHERE volunteers_id = $1",
-      [volunteerId]
-    );
-    
-    
     res.status(200).json(volunteerId);
-    
-    await db.query(
-      "DELETE FROM bookings WHERE sessions_id IN (SELECT sessions_id FROM bookings WHERE volunteers_id IS NULL AND sessions_id IN (SELECT sessions_id FROM bookings WHERE volunteers_id = $1))",
-      [volunteerId]
-    );
-
-    
   } catch (error) {
     console.error("Error deleting volunteer:", error);
     res.status(500).json({ error: "Internal Server Error" });

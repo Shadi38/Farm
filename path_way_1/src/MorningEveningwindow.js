@@ -68,7 +68,7 @@ export default function MorningEveningRegisterForm(props) {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <Typography gutterBottom>
+          <Typography pb={0.5} gutterBottom>
             Morning and Evening sessions are available
           </Typography>
         </DialogContent>
