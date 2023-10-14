@@ -284,8 +284,9 @@ const sessionId = sessionResult.rows[0].id;
 app.get("/sessions/time/:day", async function (req, res) {
   try {
     const choosedDay = req.params.day;
+    console.log(choosedDay);
     const result = await db.query(
-      "select s.id,day,time,b.id IS NOT NULL AS booked  FROM sessions as s left join bookings as b on s.id=b.sessions_id WHERE day='$1'",
+      "select s.id,day,time,b.id IS NOT NULL AS booked  FROM sessions as s left join bookings as b on s.id=b.sessions_id WHERE day=($1)",
       [choosedDay]
     );
 
