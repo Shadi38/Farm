@@ -54,12 +54,10 @@ app.get("/sessions", async function (req, res) {
 app.get("/volunteers", async function (req, res) {
   try {
     const result = await db.query("SELECT * FROM volunteers");
- console.log(result.rows);
     if (result.rows.length === 0) {
       return res.json([]);
     }
     res.json(result.rows);
-   
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });
   }
@@ -76,7 +74,6 @@ app.get("/sessions/booked", async function (req, res) {
       return res.json([]);
     }
     res.json(result.rows);
-    console.log(result.rows);
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });
   }
@@ -367,12 +364,10 @@ const sessionId = sessionResult.rows[0].id;
 app.get("/sessions/time/:day", async function (req, res) {
   try {
     const choosedDay = req.params.day;
-    console.log(choosedDay);
     const result = await db.query(
       "select s.id,day,time,b.id IS NOT NULL AS booked  FROM sessions as s left join bookings as b on s.id=b.sessions_id WHERE day=($1)",
       [choosedDay]
     );
-
     if (result.rowCount === 0) {
       return res.status(404).json(`Day not found`);
     }
@@ -416,9 +411,9 @@ app.get("/sessions/time/:day", async function (req, res) {
 app.delete("/sessions/volunteers/:id", async function (req, res) {
   const volunteerId = req.params.id;
   try {
-     await db.query("SELECT * FROM bookings WHERE volunteers_id=$1", [
-      volunteerId,
-    ]);
+     await db.query("DELETE FROM bookings WHERE volunteers_id=$1", [
+       volunteerId
+     ]);
     res.status(200).json(volunteerId);
   } catch (error) {
     console.error("Error deleting volunteer:", error);
