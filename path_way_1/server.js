@@ -240,20 +240,16 @@ app.post(
                   res.status(404).json({ error: "Session not found" });
                 } else {
                   const sessionId = sessionResult.rows[0].id;
-console.log(sessionId);
                   // Insert a booking into the bookings table and set the booked status to true
                   const bookingQuery =
                     "INSERT INTO bookings (sessions_id, volunteers_id) VALUES ($1, $2)";
-
                   db.query(
                     bookingQuery,
                     [sessionId, volunteerId],
                     (bookingErr) => {
                       if (bookingErr) {
                         console.error(bookingErr);
-                        res
-                          .status(500)
-                          .json({ error: "Internal Server Error" });
+                        res.status(500).json({ error: "Internal Server Error" });
                       } else {
                         res.status(201).json("Thanks for registering");
                       }
@@ -271,94 +267,118 @@ console.log(sessionId);
 
 
 // add old volunteer on one of  sessions and updating bookings table
-app.post(
-  "/sessions/oldVolunteer",
-  [
+// app.post(
+//   "/sessions/oldVolunteer",
+//   [
+//     body("day", "Day can't be empty").notEmpty(),
+//     body("time", "Time can't be empty").notEmpty(),
+//   ],
+//   function (req, res) {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).send({
+//         error: errors.array(),
+//       });
+//     }
+//     const name = req.body.name;
+//     const newDay = req.body.day;
+//     const newTime = req.body.time;
+
+//     const volunteerQuery = "SELECT id FROM volunteers WHERE Name=$1";
+
+//     db.query(volunteerQuery, [name], (volunteerErr, volunteerResult) => {
+//       if (volunteerErr) {
+//         console.error(volunteerErr);
+//         res.status(500).json({ error: "Internal Server Error" });
+//       }
+//       if (volunteerResult.rows.length === 0) {
+//         // No matching volunteer found
+//         res.status(404).json({ error: "volunteer not found" });
+//       } else {
+//         const volunteerId = volunteerResult.rows[0].id;
+//         //  Find a session in the sessions table based on day and time
+//         const sessionQuery =
+//           "SELECT id FROM sessions WHERE Day = $1 AND Time = $2";
+
+//         db.query(
+//           sessionQuery,
+//           [newDay, newTime],
+//           (sessionErr, sessionResult) => {
+//             if (sessionErr) {
+//               console.error(sessionErr);
+//               res.status(500).json({ error: "Internal Server Error" });
+//             } else {
+//               if (sessionResult.rows.length === 0) {
+//                 // No matching session found
+//                 res.status(404).json({ error: "Session not found" });
+//               } else {
+//                 const sessionId = sessionResult.rows[0].id;
+//                       //  Insert a booking  into the bookings table
+//                       const bookingQuery =
+//                         "INSERT INTO bookings (sessions_id, volunteers_id) VALUES ($1, $2)";
+
+//                       db.query(
+//                         bookingQuery,
+//                         [sessionId, volunteerId],
+//                         (bookingErr, bookingResult) => {
+//                           if (bookingErr) {
+//                             console.error(bookingErr);
+//                             res.status(500).json({
+//                               error: "Internal Server Error",
+//                             });
+//                           } else {
+//                             res.status(201).json("Thanks for registering");
+//                           }
+//                         }
+//                       );
+//                     }
+//                   }
+//               );
+//               }
+//             }
+//           }
+//         );
+//       }
+//     });
+//   }
+// );
+
+// add old volunteer on one of  sessions and updating bookings table
+app.post("/sessions/oldVolunteer", [
     body("day", "Day can't be empty").notEmpty(),
     body("time", "Time can't be empty").notEmpty(),
-  ],
-  function (req, res) {
+  ],async function (req, res) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).send({
         error: errors.array(),
       });
     }
-    const name = req.body.name;
-    const newDay = req.body.day;
-    const newTime = req.body.time;
+  const { name, day, time } = req.body;
+  try {
+    const volunteerResult = await db.query("SELECT id FROM volunteers WHERE Name=$1", [name]);
 
-    const volunteerQuery = "SELECT id FROM volunteers WHERE Name=$1";
+    if (volunteerResult.rows.length === 0) {
+      return res.status(404).json({ error: "Volunteer not found" });
+    }
 
-    db.query(volunteerQuery, [name], (volunteerErr, volunteerResult) => {
-      if (volunteerErr) {
-        console.error(volunteerErr);
-        res.status(500).json({ error: "Internal Server Error" });
-      }
-      if (volunteerResult.rows.length === 0) {
-        // No matching volunteer found
-        res.status(404).json({ error: "volunteer not found" });
-      } else {
-        const volunteerId = volunteerResult.rows[0].id;
-        //  Find a session in the sessions table based on day and time
-        const sessionQuery =
-          "SELECT id FROM sessions WHERE Day = $1 AND Time = $2";
+    const volunteerId = volunteerResult.rows[0].id;
+    const sessionResult = await db.query("SELECT id FROM sessions WHERE Day = $1 AND Time = $2", [day, time]);
 
-        db.query(
-          sessionQuery,
-          [newDay, newTime],
-          (sessionErr, sessionResult) => {
-            if (sessionErr) {
-              console.error(sessionErr);
-              res.status(500).json({ error: "Internal Server Error" });
-            } else {
-              if (sessionResult.rows.length === 0) {
-                // No matching session found
-                res.status(404).json({ error: "Session not found" });
-              } else {
-                // const sessionId = sessionResult.rows[0].id + 2;
-const sessionId = sessionResult.rows[0].id;
-                //  Update the booked status of the session to true
-                const updateSessionQuery =
-                  "UPDATE sessions SET booked = true WHERE id = $1";
+    if (sessionResult.rows.length === 0) {
+      return res.status(404).json({ error: "Session not found" });
+    }
 
-                db.query(
-                  updateSessionQuery,
-                  [sessionId],
-                  (updateErr, updateResult) => {
-                    if (updateErr) {
-                      console.error(updateErr);
-                      res.status(500).json({ error: "Internal Server Error" });
-                    } else {
-                      //  Insert a booking  into the bookings table
-                      const bookingQuery =
-                        "INSERT INTO bookings (sessions_id, volunteers_id) VALUES ($1, $2)";
+    const sessionId = sessionResult.rows[0].id;
+    await db.query("INSERT INTO bookings (sessions_id, volunteers_id) VALUES ($1, $2)", [sessionId, volunteerId]);
 
-                      db.query(
-                        bookingQuery,
-                        [sessionId, volunteerId],
-                        (bookingErr, bookingResult) => {
-                          if (bookingErr) {
-                            console.error(bookingErr);
-                            res.status(500).json({
-                              error: "Internal Server Error",
-                            });
-                          } else {
-                            res.status(201).json("Thanks for registering");
-                          }
-                        }
-                      );
-                    }
-                  }
-                );
-              }
-            }
-          }
-        );
-      }
-    });
+    res.status(201).json("Thanks for registering");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-);
+});
+
 
 //returning time(morning or evening) and status of their booking(false or true)
 app.get("/sessions/time/:day", async function (req, res) {
