@@ -91,7 +91,7 @@ function Sessions() {
       firstBookedStatus === true)
   ) {
     // sessionWindow = <EveningWindow morning={morning} setMorning={setMorning} />;
-    sessionWindow = <EveningOrMorningWindow morning={morning} morningText={morningText} />;
+    sessionWindow = <EveningOrMorningWindow morning={morning} morningText={morningText} setMorning={setMorning} />;
   }
   return (
     <div>
