@@ -65,8 +65,7 @@ const [registerStatus2, setRegisterStatus2] = useState(false);
        type: "old"
      };
     fetch(
-      // "https://pathway-project-1-server.onrender.com/sessions/volunteer"
-      "http://localhost:3000/sessions/volunteer",
+       "https://pathway-project-1-server.onrender.com/sessions/volunteer",
       {
         method: "POST",
         headers: {

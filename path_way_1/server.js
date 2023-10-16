@@ -136,7 +136,7 @@ app.post("/sessions/volunteer", async function (req, res) {
       [sessionId, volunteerId]
     );
 
-    res.status(201).json("Thanks for registering as an old volunteer");
+    res.status(201).json("Thanks for registering");
  
 
   } catch (error) {
