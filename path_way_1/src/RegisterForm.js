@@ -2,9 +2,8 @@ import React,{useEffect, useState} from "react";
 
 function RegisterForm(props) {
 
-  const { morning, setMorning, evening, setEvening } = props;
+  const { morning, evening} = props;
 
- 
   const [volunteer,setVolunteer] = useState([]);
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");

@@ -19,7 +19,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function MorningEveningWindow(props) {
+export default function EveningOrMorningWindow(props) {
+  const { evening, morning, morningText, setEvening, setMorning } = props;
+
   const [open, setOpen] = React.useState(false);
   const [showRegisterForm, setShowRegisterForm] = React.useState(false);
 
@@ -34,15 +36,12 @@ export default function MorningEveningWindow(props) {
 
   const handleRegisterClick = () => {
     setShowRegisterForm(true);
+   
   };
 
   return (
     <div>
-      <Button
-        variant="contained"
-        style={{ color: "#FC4445", backgroundColor: "white", marginLeft: 130 }}
-        onClick={handleClickOpen}
-      >
+      <Button variant="outlined" onClick={handleClickOpen}>
         Book session
       </Button>
       <BootstrapDialog
@@ -50,7 +49,7 @@ export default function MorningEveningWindow(props) {
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <DialogTitle sx={{ m: 0, p: 3 }} id="customized-dialog-title">
+        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           We are happy to have you as a volunteer
         </DialogTitle>
         <IconButton
@@ -65,19 +64,32 @@ export default function MorningEveningWindow(props) {
         >
           <CloseIcon />
         </IconButton>
-        <DialogContent  dividers>
+        <DialogContent dividers>
+          {/* <Typography gutterBottom>Morning session is available</Typography> */}
           <Typography gutterBottom>
-            Morning  and Evening sessions are available
+            {morningText ? "Morning" : "Evening"} session is available
           </Typography>
         </DialogContent>
         <DialogActions>
-          {showRegisterForm ? (
-            <RegisterForm />
-          ) : (
-            <Button autoFocus onClick={handleRegisterClick}>
-              Register
-            </Button>
-          )}
+          <DialogActions>
+            {showRegisterForm ? (
+              morningText ? (
+                <>
+                  {setEvening(true)}
+                  <RegisterForm evening={evening} />
+                </>
+              ) : (
+                <>
+                  {setMorning(true)}
+                  <RegisterForm morning={morning} />
+                </>
+              )
+            ) : (
+              <Button autoFocus onClick={handleRegisterClick}>
+                Register
+              </Button>
+            )}
+          </DialogActions>
         </DialogActions>
       </BootstrapDialog>
     </div>

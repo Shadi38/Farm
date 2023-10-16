@@ -7,8 +7,8 @@ import Header from "./Header";
 
 
 function App() {
+  
   const [showSessions, setShowSessions] = useState(false);
-  const [showSessionsVolunteers, setShowSessionsVolunteers] = useState(false);
 
   return (
     <Router>
@@ -20,7 +20,6 @@ function App() {
             to="/Sessions"
             onClick={() => {
               setShowSessions(true);
-              setShowSessionsVolunteers(false); // Hide the other content
             }}
           >
             Sessions
@@ -29,15 +28,15 @@ function App() {
             className="Link"
             to="/SessionsAndVolunteers"
             onClick={() => {
-              setShowSessionsVolunteers(true);
-              setShowSessions(false);
-            }} >
+              setShowSessions(true);
+            }}
+          >
             Sessions/Volunteers
           </Link>
         </div>
         <Routes>
           {showSessions && <Route path="/Sessions" element={<Sessions />} />}
-          {showSessionsVolunteers && (
+          {showSessions && (
             <Route
               path="/SessionsAndVolunteers"
               element={<SessionsAndVolunteers />}
