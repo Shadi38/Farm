@@ -31,8 +31,8 @@ function Sessions() {
       const formattedDate = formatDateForBackend(day);
       console.log(formattedDate);
       const response = await fetch(
-        // `https://pathway-project-1-server.onrender.com/sessions/time/${formattedDate}`
-        `http://localhost:3000/sessions/time/${formattedDate}`
+        `https://pathway-project-1-server.onrender.com/sessions/time/${formattedDate}`
+        //`http://localhost:3000/sessions/time/${formattedDate}`
       );
       console.log(response);
       if (!response.ok) {
