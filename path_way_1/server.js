@@ -74,104 +74,185 @@ app.get("/bookings", async function (req, res) {
   }
 });
 
-// add new volunteer on one of  sessions and updating volunteers table and bookings table
-app.post(
-  "/sessions/newVolunteer",
-  [
-    body("name", "Name can't be empty").notEmpty(),
-    body("lastname", "Last Name can't be empty").notEmpty(),
-    body("address", "Address can't be empty").notEmpty(),
-    body("day", "Day can't be empty").notEmpty(),
-    body("time", "Time can't be empty").notEmpty(),
-  ],
-  async function (req, res) {
+// add new/old volunteer on one of  sessions and updating volunteers and bookings tables
+app.post("/sessions/volunteer", async function (req, res) {
+  const { type } = req.body; // Use a field in the request body to indicate the type
+
+  // Validation
+  if (type === "new") {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
         error: errors.array(),
       });
     }
-
-    const newName = req.body.name;
-    const newLastName = req.body.lastname;
-    const newAddress = req.body.address;
-    const newDay = req.body.day;
-    const newTime = req.body.time;
-
-    try {
+  }
+  try {
+    if (type === "new") {
       // Registering a new session by a new volunteer
+      const { name, lastname, address, day, time } = req.body;
+
       const volunteerQuery =
         "INSERT INTO volunteers (name, lastname, address) VALUES ($1, $2, $3) RETURNING id";
 
       const volunteerResult = await db.query(volunteerQuery, [
-        newName,
-        newLastName,
-        newAddress,
+        name,
+        lastname,
+        address,
       ]);
       const volunteerId = volunteerResult.rows[0].id;
 
-      // Find a session in the sessions table based on day and time
       const sessionQuery =
         "SELECT id FROM sessions WHERE day = $1 AND time = $2";
 
-      const sessionResult = await db.query(sessionQuery, [newDay, newTime]);
+      const sessionResult = await db.query(sessionQuery, [day, time]);
 
       if (sessionResult.rows.length === 0) {
-        // No matching session found
-        res.status(404).json({ error: "Session not found" });
-      } else {
-        const sessionId = sessionResult.rows[0].id;
-
-        // Insert a booking into the bookings table and set the booked status to true
-        const bookingQuery =
-          "INSERT INTO bookings (sessions_id, volunteers_id) VALUES ($1, $2)";
-        await db.query(bookingQuery, [sessionId, volunteerId]);
-
-        res.status(201).json("Thanks for registering");
+        return res.status(404).json({ error: "Session not found" });
       }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
+
+      const sessionId = sessionResult.rows[0].id;
+
+      const bookingQuery =
+        "INSERT INTO bookings (sessions_id, volunteers_id) VALUES ($1, $2)";
+      await db.query(bookingQuery, [sessionId, volunteerId]);
+
+      res.status(201).json("Thanks for registering as a new volunteer");
+    } else if (type === "old") {
+      // Adding an old volunteer to a session
+      const { name, day, time } = req.body;
+      const volunteerResult = await db.query(
+        "SELECT id FROM volunteers WHERE Name=$1",
+        [name]
+      );
+
+      if (volunteerResult.rows.length === 0) {
+        return res.status(404).json({ error: "Volunteer not found" });
+      }
+
+      const volunteerId = volunteerResult.rows[0].id;
+      const sessionResult = await db.query(
+        "SELECT id FROM sessions WHERE Day = $1 AND Time = $2",
+        [day, time]
+      );
+
+      if (sessionResult.rows.length === 0) {
+        return res.status(404).json({ error: "Session not found" });
+      }
+
+      const sessionId = sessionResult.rows[0].id;
+      await db.query(
+        "INSERT INTO bookings (sessions_id, volunteers_id) VALUES ($1, $2)",
+        [sessionId, volunteerId]
+      );
+
+      res.status(201).json("Thanks for registering as an old volunteer");
+    } else {
+      res.status(400).json({ error: "Invalid request type" });
     }
-  }
-);
-
-
-// add old volunteer on one of  sessions and updating bookings table
-app.post("/sessions/oldVolunteer", [
-    body("day", "Day can't be empty").notEmpty(),
-    body("time", "Time can't be empty").notEmpty(),
-  ],async function (req, res) {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).send({
-        error: errors.array(),
-      });
-    }
-  const { name, day, time } = req.body;
-  try {
-    const volunteerResult = await db.query("SELECT id FROM volunteers WHERE Name=$1", [name]);
-
-    if (volunteerResult.rows.length === 0) {
-      return res.status(404).json({ error: "Volunteer not found" });
-    }
-
-    const volunteerId = volunteerResult.rows[0].id;
-    const sessionResult = await db.query("SELECT id FROM sessions WHERE Day = $1 AND Time = $2", [day, time]);
-
-    if (sessionResult.rows.length === 0) {
-      return res.status(404).json({ error: "Session not found" });
-    }
-
-    const sessionId = sessionResult.rows[0].id;
-    await db.query("INSERT INTO bookings (sessions_id, volunteers_id) VALUES ($1, $2)", [sessionId, volunteerId]);
-
-    res.status(201).json("Thanks for registering");
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+// app.post(
+//   "/sessions/newVolunteer",
+//   [
+//     body("name", "Name can't be empty").notEmpty(),
+//     body("lastname", "Last Name can't be empty").notEmpty(),
+//     body("address", "Address can't be empty").notEmpty(),
+//     body("day", "Day can't be empty").notEmpty(),
+//     body("time", "Time can't be empty").notEmpty(),
+//   ],
+//   async function (req, res) {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({
+//         error: errors.array(),
+//       });
+//     }
+
+//     const newName = req.body.name;
+//     const newLastName = req.body.lastname;
+//     const newAddress = req.body.address;
+//     const newDay = req.body.day;
+//     const newTime = req.body.time;
+
+//     try {
+//       // Registering a new session by a new volunteer
+//       const volunteerQuery =
+//         "INSERT INTO volunteers (name, lastname, address) VALUES ($1, $2, $3) RETURNING id";
+
+//       const volunteerResult = await db.query(volunteerQuery, [
+//         newName,
+//         newLastName,
+//         newAddress,
+//       ]);
+//       const volunteerId = volunteerResult.rows[0].id;
+
+//       // Find a session in the sessions table based on day and time
+//       const sessionQuery =
+//         "SELECT id FROM sessions WHERE day = $1 AND time = $2";
+
+//       const sessionResult = await db.query(sessionQuery, [newDay, newTime]);
+
+//       if (sessionResult.rows.length === 0) {
+//         // No matching session found
+//         res.status(404).json({ error: "Session not found" });
+//       } else {
+//         const sessionId = sessionResult.rows[0].id;
+
+//         // Insert a booking into the bookings table and set the booked status to true
+//         const bookingQuery =
+//           "INSERT INTO bookings (sessions_id, volunteers_id) VALUES ($1, $2)";
+//         await db.query(bookingQuery, [sessionId, volunteerId]);
+
+//         res.status(201).json("Thanks for registering");
+//       }
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ error: "Internal Server Error" });
+//     }
+//   }
+// );
+
+
+// // add old volunteer on one of  sessions and updating bookings table
+// app.post("/sessions/oldVolunteer", [
+//     body("day", "Day can't be empty").notEmpty(),
+//     body("time", "Time can't be empty").notEmpty(),
+//   ],async function (req, res) {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).send({
+//         error: errors.array(),
+//       });
+//     }
+//   const { name, day, time } = req.body;
+//   try {
+//     const volunteerResult = await db.query("SELECT id FROM volunteers WHERE Name=$1", [name]);
+
+//     if (volunteerResult.rows.length === 0) {
+//       return res.status(404).json({ error: "Volunteer not found" });
+//     }
+
+//     const volunteerId = volunteerResult.rows[0].id;
+//     const sessionResult = await db.query("SELECT id FROM sessions WHERE Day = $1 AND Time = $2", [day, time]);
+
+//     if (sessionResult.rows.length === 0) {
+//       return res.status(404).json({ error: "Session not found" });
+//     }
+
+//     const sessionId = sessionResult.rows[0].id;
+//     await db.query("INSERT INTO bookings (sessions_id, volunteers_id) VALUES ($1, $2)", [sessionId, volunteerId]);
+
+//     res.status(201).json("Thanks for registering");
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
 
 
 //returning time(morning or evening) and status of their booking(false or true)
