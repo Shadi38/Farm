@@ -11,8 +11,8 @@ function RegisterForm(props) {
   const [day, setDay] = useState("");
   const [time, setTime] = useState("Evening");
   const [registerMessage, setRegisterMessage] = useState("");
-  const [registerStatus, setRegisterStatus] = useState(false);
-
+  const [registerStatus1, setRegisterStatus1] = useState(false);
+const [registerStatus2, setRegisterStatus2] = useState(false);
   //loading name and lastName of old volunteers
   useEffect(()=>{fetch("https://pathway-project-1-server.onrender.com/volunteers")
     .then((response) => {
@@ -52,7 +52,8 @@ function RegisterForm(props) {
       .then((data) => {
         console.log(data);
         setRegisterMessage(data);
-        setRegisterStatus(true);
+        setRegisterStatus1(true);
+        setRegisterStatus2(false);
       });
   }
   //adding old volunteer for new session
@@ -78,7 +79,8 @@ function RegisterForm(props) {
       .then((data) => {
         console.log(data);
         setRegisterMessage(data);
-        setRegisterStatus(true);
+        setRegisterStatus2(true);
+        setRegisterStatus1(false);
       }); 
   }
   return (
@@ -167,7 +169,7 @@ function RegisterForm(props) {
             submit
           </button>
         </div>
-        {registerStatus && (
+        {registerStatus1 && (
           <div className="mainMessageDive">
             <p>Thanks for registering</p>
             <div className="messageDiv">{registerMessage.error}</div>
@@ -243,7 +245,7 @@ function RegisterForm(props) {
             submit
           </button>
         </div>
-        {registerStatus && (
+        {registerStatus2 && (
           <div className="mainMessageDive">
             <p>Thanks for registering</p>
             <div className="messageDiv">{registerMessage.error}</div>
