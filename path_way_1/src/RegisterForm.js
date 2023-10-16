@@ -169,6 +169,7 @@ function RegisterForm(props) {
         </div>
         {registerStatus && (
           <div className="mainMessageDive">
+            <p>Thanks for registering</p>
             <div className="messageDiv">{registerMessage.error}</div>
           </div>
         )}
@@ -244,6 +245,7 @@ function RegisterForm(props) {
         </div>
         {registerStatus && (
           <div className="mainMessageDive">
+            <p>Thanks for registering</p>
             <div className="messageDiv">{registerMessage.error}</div>
           </div>
         )}
