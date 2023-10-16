@@ -76,7 +76,7 @@ app.get("/bookings", async function (req, res) {
 
 // add new/old volunteer on one of  sessions and updating volunteers and bookings tables
 app.post("/sessions/volunteer", async function (req, res) {
-  const { type } = req.body; // Use a field in the request body to indicate the type
+  const { type, day, time } = req.body; 
 
   // Validation
   if (type === "new") {
@@ -88,9 +88,10 @@ app.post("/sessions/volunteer", async function (req, res) {
     }
   }
   try {
+    let volunteerId;
     if (type === "new") {
       // Registering a new session by a new volunteer
-      const { name, lastname, address, day, time } = req.body;
+      const { name, lastname, address } = req.body;
 
       const volunteerQuery =
         "INSERT INTO volunteers (name, lastname, address) VALUES ($1, $2, $3) RETURNING id";
@@ -100,27 +101,11 @@ app.post("/sessions/volunteer", async function (req, res) {
         lastname,
         address,
       ]);
-      const volunteerId = volunteerResult.rows[0].id;
-
-      const sessionQuery =
-        "SELECT id FROM sessions WHERE day = $1 AND time = $2";
-
-      const sessionResult = await db.query(sessionQuery, [day, time]);
-
-      if (sessionResult.rows.length === 0) {
-        return res.status(404).json({ error: "Session not found" });
-      }
-
-      const sessionId = sessionResult.rows[0].id;
-
-      const bookingQuery =
-        "INSERT INTO bookings (sessions_id, volunteers_id) VALUES ($1, $2)";
-      await db.query(bookingQuery, [sessionId, volunteerId]);
-
-      res.status(201).json("Thanks for registering as a new volunteer");
+      volunteerId = volunteerResult.rows[0].id;
+    
     } else if (type === "old") {
       // Adding an old volunteer to a session
-      const { name, day, time } = req.body;
+      const { name} = req.body;
       const volunteerResult = await db.query(
         "SELECT id FROM volunteers WHERE Name=$1",
         [name]
@@ -130,26 +115,30 @@ app.post("/sessions/volunteer", async function (req, res) {
         return res.status(404).json({ error: "Volunteer not found" });
       }
 
-      const volunteerId = volunteerResult.rows[0].id;
-      const sessionResult = await db.query(
-        "SELECT id FROM sessions WHERE Day = $1 AND Time = $2",
-        [day, time]
-      );
-
-      if (sessionResult.rows.length === 0) {
-        return res.status(404).json({ error: "Session not found" });
-      }
-
-      const sessionId = sessionResult.rows[0].id;
-      await db.query(
-        "INSERT INTO bookings (sessions_id, volunteers_id) VALUES ($1, $2)",
-        [sessionId, volunteerId]
-      );
-
-      res.status(201).json("Thanks for registering as an old volunteer");
-    } else {
+      volunteerId = volunteerResult.rows[0].id;
+    }else {
       res.status(400).json({ error: "Invalid request type" });
+      return
     }
+
+    const sessionResult = await db.query(
+      "SELECT id FROM sessions WHERE Day = $1 AND Time = $2",
+      [day, time]
+    );
+
+    if (sessionResult.rows.length === 0) {
+      return res.status(404).json({ error: "Session not found" });
+    }
+
+    const sessionId = sessionResult.rows[0].id;
+    await db.query(
+      "INSERT INTO bookings (sessions_id, volunteers_id) VALUES ($1, $2)",
+      [sessionId, volunteerId]
+    );
+
+    res.status(201).json("Thanks for registering as an old volunteer");
+ 
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
