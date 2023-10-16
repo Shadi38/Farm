@@ -36,9 +36,9 @@ const [registerStatus2, setRegisterStatus2] = useState(false);
       booked: true,
     };
     console.log(newVolunteer);
-    //"http://localhost:3000/sessions/newVolunteer"
+    //"http://localhost:3000/sessions/volunteer"
     fetch(
-      "https://pathway-project-1-server.onrender.com/sessions/newVolunteer",
+      "https://pathway-project-1-server.onrender.com/sessions/volunteer",
       {
         method: "POST",
         headers: {
@@ -66,7 +66,7 @@ const [registerStatus2, setRegisterStatus2] = useState(false);
        booked: true,
      };
     fetch(
-      "https://pathway-project-1-server.onrender.com/sessions/oldVolunteer",
+      "https://pathway-project-1-server.onrender.com/sessions/volunteer",
       {
         method: "POST",
         headers: {
