@@ -278,6 +278,7 @@ app.delete("/sessions/volunteers/:id", async function (req, res) {
 });
 
 //return days that morning and evening sessions are booked
+//(in these days there is no sessions available to book and their tiles should be red )
 app.get("/MorningEveningBooked",async function (req,res) {
  
   try {

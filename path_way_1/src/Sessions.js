@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React, { useState,useEffect, useLayoutEffect } from "react";
 import Calendar from "react-calendar";
 import BookedWindow from "./BookedWindow";
 import MorningEveningWindow from "./MorningEveningwindow";
 import { format } from "date-fns";
-// import MorningWindow from "./MorningWindow";
-// import EveningWindow from "./EveningWindow";
 import EveningOrMorningWindow from "./EveningOrMorningWindow";
 import "react-calendar/dist/Calendar.css";
 
@@ -17,9 +15,40 @@ function Sessions() {
   const [secondBookedStatus, setSecondBookedStatus] = useState(null);
   const [morning, setMorning] = useState(false);
   const [evening, setEvening] = useState(false);
-  const [morningText, setMorningText] = useState(false);// changing the text in MorningEvening window component
+  const [morningText, setMorningText] = useState(false); // changing the text in MorningEvening window component
+  const [highlightedDates, setHighlightedDates] = useState([]);
+  //(in these days there is no sessions available to book and their tiles should be red )
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(
+          "https://pathway-project-1-server.onrender.com/MorningEveningBooked"
+        );
+        if (!response.ok) {
+          throw new Error("Fetch failed");
+        }
+        const data = await response.json();
+        const highlightedDates = data.map((item) => item.day);
+        setHighlightedDates(highlightedDates);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
+    }
+    fetchData();
+  }, []);
+  //checking the date is i our highlightedDates array(days will have red background)
+  const isDateHighlighted = (date) => {
+    return highlightedDates.includes(date.toISOString().slice(0, 10));
+  };
+//spesify className
+  const tileContent = ({ date, view }) => {
+    if (view === "month" && isDateHighlighted(date)) {
+      return <div className="highlighted-tile"></div>;
+    }
 
- 
+    return null;
+  };
+
   //  format the date in  "YYYY-MM-DD" format
   function formatDateForBackend(selectedDate) {
     return format(selectedDate, "yyyy-MM-dd");
@@ -72,8 +101,7 @@ function Sessions() {
       secondTimeStatus === "Morning" &&
       firstBookedStatus === true)
   ) {
-   
-    setMorningText(true)
+    setMorningText(true);
     sessionWindow = (
       <EveningOrMorningWindow
         evening={evening}
@@ -90,8 +118,13 @@ function Sessions() {
       secondTimeStatus === "Evening" &&
       firstBookedStatus === true)
   ) {
-   
-    sessionWindow = <EveningOrMorningWindow morning={morning} morningText={morningText} setMorning={setMorning} />;
+    sessionWindow = (
+      <EveningOrMorningWindow
+        morning={morning}
+        morningText={morningText}
+        setMorning={setMorning}
+      />
+    );
   }
   return (
     <div>
@@ -104,6 +137,7 @@ function Sessions() {
             onClickDay={(value) => {
               handleChooseTime(value);
             }}
+            tileContent={tileContent}
           />
         </div>
       </div>
