@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useLayoutEffect } from "react";
+import React, { useState,useEffect,} from "react";
 import Calendar from "react-calendar";
 import BookedWindow from "./BookedWindow";
 import MorningEveningWindow from "./MorningEveningwindow";
@@ -22,14 +22,21 @@ function Sessions() {
     async function fetchData() {
       try {
         const response = await fetch(
-          "https://pathway-project-1-server.onrender.com/MorningEveningBooked"
+          "http://localhost:3000/MorningEveningBooked"
+          // "https://pathway-project-1-server.onrender.com/MorningEveningBooked"
         );
         if (!response.ok) {
           throw new Error("Fetch failed");
         }
         const data = await response.json();
+
+        console.log(data);
+        
         const highlightedDates = data.map((item) => item.day);
         setHighlightedDates(highlightedDates);
+
+        console.log(highlightedDates);
+
       } catch (error) {
         console.error("Error fetching data", error);
       }
@@ -41,7 +48,10 @@ function Sessions() {
     return highlightedDates.includes(date.toISOString().slice(0, 10));
   };
 //spesify className
-  const tileContent = ({ date, view }) => {
+  
+   const tileContent = ({ date, view }) => {
+    console.log(isDateHighlighted);
+    
     if (view === "month" && isDateHighlighted(date)) {
       return <div className="highlighted-tile"></div>;
     }
