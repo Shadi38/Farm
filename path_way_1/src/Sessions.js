@@ -17,24 +17,29 @@ function Sessions() {
   const [evening, setEvening] = useState(false);
   const [morningText, setMorningText] = useState(false); // changing the text in MorningEvening window component
   const [highlightedDates, setHighlightedDates] = useState([]);
+
+  //  format the date in  "YYYY-MM-DD" format
+  function formatDateForBackend(selectedDate) {
+    return format(selectedDate, "yyyy-MM-dd");
+  }
+
   //(in these days there is no sessions available to book and their tiles should be red )
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch(
-          // "http://localhost:3000/MorningEveningBooked"
-           "https://pathway-project-1-server.onrender.com/MorningEveningBooked"
+          //"http://localhost:3000/MorningEveningBooked"
+          "https://pathway-project-1-server.onrender.com/MorningEveningBooked"
         );
         if (!response.ok) {
           throw new Error("Fetch failed");
         }
         const data = await response.json();
-        const highlightedDates = data.map((item) => item.day.replace(/"/g, ""));
+        //const highlightedDates = data.map((item) => item.day.replace(/"/g, ""));
+        const highlightedDates = data.map((item) => formatDateForBackend(item.day));
         setHighlightedDates(highlightedDates);
 
-
         console.log(highlightedDates);
-
       } catch (error) {
         console.error("Error fetching data", error);
       }
@@ -44,13 +49,13 @@ function Sessions() {
   //checking the date is i our highlightedDates array(days will have red background)
   const isDateHighlighted = (date) => {
     // Convert the calendar date  to ISO
-    const formatedDateCalendar = date.toISOString();
+    const formatedDateCalendar = formatDateForBackend(date);
 
     return highlightedDates.includes(formatedDateCalendar);
   };
 
   //spesify className
-   const tileContent = ({ date, view }) => {
+  const tileContent = ({ date, view }) => {
     if (view === "month" && isDateHighlighted(date)) {
       return <div className="highlighted-tile"></div>;
     }
@@ -58,10 +63,6 @@ function Sessions() {
     return null;
   };
 
-  //  format the date in  "YYYY-MM-DD" format
-  function formatDateForBackend(selectedDate) {
-    return format(selectedDate, "yyyy-MM-dd");
-  }
   //an array of objects with time and booked propertis
   async function handleChooseTime(day) {
     try {
