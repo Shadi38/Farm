@@ -30,7 +30,7 @@ function Sessions() {
         }
         const data = await response.json();
 
-        console.log(data);
+        
 
         const highlightedDates = data.map((item) => item.day);
         setHighlightedDates(highlightedDates);
@@ -45,6 +45,7 @@ function Sessions() {
   }, []);
   //checking the date is i our highlightedDates array(days will have red background)
   const isDateHighlighted = (date) => {
+    console.log(date);
     return highlightedDates.includes(date.toISOString());
   };
 //spesify className
