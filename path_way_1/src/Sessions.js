@@ -22,8 +22,8 @@ function Sessions() {
     async function fetchData() {
       try {
         const response = await fetch(
-          "http://localhost:3000/MorningEveningBooked"
-          // "https://pathway-project-1-server.onrender.com/MorningEveningBooked"
+          // "http://localhost:3000/MorningEveningBooked"
+           "https://pathway-project-1-server.onrender.com/MorningEveningBooked"
         );
         if (!response.ok) {
           throw new Error("Fetch failed");
@@ -31,7 +31,7 @@ function Sessions() {
         const data = await response.json();
 
         console.log(data);
-        
+
         const highlightedDates = data.map((item) => item.day);
         setHighlightedDates(highlightedDates);
 
