@@ -29,11 +29,9 @@ function Sessions() {
           throw new Error("Fetch failed");
         }
         const data = await response.json();
+        const highlightedDates = data.map((item) => item.day.replace(/"/g, ""));
+        setHighlightedDates(highlightedDates);
 
-        
-
-        const highlightedDates = data.map((item) => item.day);
-        setHighlightedDates(highlightedDates.map((date) => date.replace(/"/g, "")));
 
         console.log(highlightedDates);
 
@@ -45,7 +43,7 @@ function Sessions() {
   }, []);
   //checking the date is i our highlightedDates array(days will have red background)
   const isDateHighlighted = (date) => {
-    // Convert the calendar date 
+    // Convert the calendar date  to ISO
     const formatedDateCalendar = date.toISOString();
 
     return highlightedDates.includes(formatedDateCalendar);
