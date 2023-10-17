@@ -72,7 +72,7 @@ function Sessions() {
       secondTimeStatus === "Morning" &&
       firstBookedStatus === true)
   ) {
-    // sessionWindow = <MorningWindow evening={evening} setEvening={setEvening} />;
+   
     setMorningText(true)
     sessionWindow = (
       <EveningOrMorningWindow
@@ -90,7 +90,7 @@ function Sessions() {
       secondTimeStatus === "Evening" &&
       firstBookedStatus === true)
   ) {
-    // sessionWindow = <EveningWindow morning={morning} setMorning={setMorning} />;
+   
     sessionWindow = <EveningOrMorningWindow morning={morning} morningText={morningText} setMorning={setMorning} />;
   }
   return (

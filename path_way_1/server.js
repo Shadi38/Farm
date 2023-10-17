@@ -64,7 +64,7 @@ app.get("/sessions/booked", async function (req, res) {
   }
 });
 
-// bookings table
+
 app.get("/bookings", async function (req, res) {
   try {
     const result = await db.query("SELECT * FROM bookings");
@@ -277,6 +277,32 @@ app.delete("/sessions/volunteers/:id", async function (req, res) {
   }
 });
 
+//return days that morning and evening sessions are booked
+app.get("/MorningEveningBooked",async function (req,res) {
+ 
+  try {
+    const bookedQuery = `SELECT DISTINCT day
+FROM (
+    SELECT day
+    FROM sessions AS s
+    LEFT JOIN bookings AS b ON s.id = b.sessions_id
+    WHERE time = 'Morning' AND b.id IS NOT NULL
+) AS morning_booked
+WHERE day IN (
+    SELECT day
+    FROM sessions AS s
+    LEFT JOIN bookings AS b ON s.id = b.sessions_id
+    WHERE time = 'Evening' AND b.id IS NOT NULL
+)`
+
+    const result = await db.query(bookedQuery);
+    console.log(result);
+res.status(200).json(result.rows);
+  } catch (error) {
+    return res.status(500).json({ error: "Internal server error" });
+  }
+
+}) 
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
