@@ -2,7 +2,7 @@ import React, { useState,useEffect,} from "react";
 import Calendar from "react-calendar";
 import BookedWindow from "./BookedWindow";
 import MorningEveningWindow from "./MorningEveningwindow";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import EveningOrMorningWindow from "./EveningOrMorningWindow";
 import "react-calendar/dist/Calendar.css";
 
@@ -36,7 +36,7 @@ function Sessions() {
         }
         const data = await response.json();
         //const highlightedDates = data.map((item) => item.day.replace(/"/g, ""));
-        const highlightedDates = data.map((item) => formatDateForBackend(item.day));
+        const highlightedDates = data.map((item) => formatDateForBackend(parseISO(item.day)));
         setHighlightedDates(highlightedDates);
 
         console.log(highlightedDates);
@@ -49,7 +49,7 @@ function Sessions() {
   //checking the date is i our highlightedDates array(days will have red background)
   const isDateHighlighted = (date) => {
     // Convert the calendar date  to ISO
-    const formatedDateCalendar = formatDateForBackend(date);
+    const formatedDateCalendar = date.toISOString();
 
     return highlightedDates.includes(formatedDateCalendar);
   };
