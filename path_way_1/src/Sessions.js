@@ -45,12 +45,12 @@ function Sessions() {
   }, []);
   //checking the date is i our highlightedDates array(days will have red background)
   const isDateHighlighted = (date) => {
-    return highlightedDates.includes(date.toISOString().slice(0, 10));
+    return highlightedDates.includes(date.toISOString());
   };
 //spesify className
   
    const tileContent = ({ date, view }) => {
-    console.log(isDateHighlighted);
+    console.log(isDateHighlighted(date));
     
     if (view === "month" && isDateHighlighted(date)) {
       return <div className="highlighted-tile"></div>;
