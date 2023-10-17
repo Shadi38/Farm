@@ -33,7 +33,7 @@ function Sessions() {
         
 
         const highlightedDates = data.map((item) => item.day);
-        setHighlightedDates(highlightedDates);
+        setHighlightedDates(highlightedDates.map((date) => date.replace(/"/g, "")));
 
         console.log(highlightedDates);
 
@@ -45,14 +45,14 @@ function Sessions() {
   }, []);
   //checking the date is i our highlightedDates array(days will have red background)
   const isDateHighlighted = (date) => {
-    console.log(date);
-    return highlightedDates.includes(date.toISOString());
+    // Convert the calendar date 
+    const formatedDateCalendar = date.toISOString();
+
+    return highlightedDates.includes(formatedDateCalendar);
   };
-//spesify className
-  
+
+  //spesify className
    const tileContent = ({ date, view }) => {
-    console.log(isDateHighlighted(date));
-    
     if (view === "month" && isDateHighlighted(date)) {
       return <div className="highlighted-tile"></div>;
     }
