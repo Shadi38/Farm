@@ -5,7 +5,8 @@ import MorningEveningWindow from "./MorningEveningwindow";
 import { format} from "date-fns";
 import EveningOrMorningWindow from "./EveningOrMorningWindow";
 import "react-calendar/dist/Calendar.css";
-  import classnames from "classnames";
+
+  
 
 function Sessions() {
   const [date, setDate] = useState(new Date());
@@ -53,21 +54,17 @@ function Sessions() {
     const formatedDateCalendar = date.toISOString().split("T")[0];
     return highlightedDates.includes(formatedDateCalendar);
   };
-
-
-
+  // Custom tile content for the calendar
   const tileContent = ({ date, view }) => {
-    const existingClasses =
-      "react-calendar__tile react-calendar__month-view__days__day";
-    const highlightedClass = "highlighted-tile";
-
-    const buttonClasses = classnames(existingClasses, {
-      [highlightedClass]: isDateHighlighted(date),
-    });
-
-    return <button className={buttonClasses} />;
+    if (view === "month" && isDateHighlighted(date)) {
+      return (
+        <button className="highlighted-tile" style={{ backgroundColor: "red" }}>
+         
+        </button>
+      );
+    }
+    return null;
   };
-
 
   //an array of objects with time and booked propertis
   async function handleChooseTime(day) {
