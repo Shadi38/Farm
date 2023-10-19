@@ -28,18 +28,20 @@ export default function BookedWindow() {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open dialog
+      <Button
+        variant="outlined"
+        style={{ color: "#FC4445", backgroundColor: "white", marginLeft: 130 }}
+        onClick={handleClickOpen}
+      >
+        Book session
       </Button>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <DialogContent dividers> 
-          <Typography gutterBottom>
-            All sessions are booked
-          </Typography>
+        <DialogContent dividers>
+          <Typography gutterBottom>All sessions are booked</Typography>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>

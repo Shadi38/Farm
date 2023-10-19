@@ -58,8 +58,7 @@ function Sessions() {
   const tileContent = ({ date, view }) => {
     if (view === "month" && isDateHighlighted(date)) {
       return (
-        <button className="highlighted-tile" style={{ backgroundColor: "red" }}>
-         
+        <button className="highlighted-tile" style={{ backgroundColor: "red" }}> 
         </button>
       );
     }
@@ -74,15 +73,12 @@ function Sessions() {
       console.log(formattedDate);
       const response = await fetch(
         `https://pathway-project-1-server.onrender.com/sessions/time/${formattedDate}`
-        //`http://localhost:3000/sessions/time/${formattedDate}`
       );
-      console.log(response);
+      
       if (!response.ok) {
         throw new Error("Fetch failed ");
       }
       const data = await response.json();
-      console.log(data);
-
       if (data.length === 2) {
         setFirstTimeStatus(data[0].time);
         setFirstBookedStatus(data[0].booked);
@@ -93,12 +89,10 @@ function Sessions() {
         console.error("Not enough data rows received");
       }
     } catch (error) {
-      console.log(error);
       console.error("Error fetching data");
     }
   }
-  console.log(firstBookedStatus);
-  console.log(secondBookedStatus);
+  
   let sessionWindow = null;
   if ((firstBookedStatus && secondBookedStatus) === true) {
     sessionWindow = <BookedWindow />;
