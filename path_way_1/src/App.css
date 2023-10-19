@@ -19,9 +19,7 @@ body{
   font-size: calc(10px + 2vmin);
   color:#FC4445;
 }
-.headerDiv{
-  text-align: center;
-}
+
 .Link{
 color: #FC4445;
 margin-left: 20px;
