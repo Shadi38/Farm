@@ -2,10 +2,10 @@ import React, { useState,useEffect,} from "react";
 import Calendar from "react-calendar";
 import BookedWindow from "./BookedWindow";
 import MorningEveningWindow from "./MorningEveningwindow";
-import { format, parseISO } from "date-fns";
+import { format} from "date-fns";
 import EveningOrMorningWindow from "./EveningOrMorningWindow";
 import "react-calendar/dist/Calendar.css";
-
+  import classnames from "classnames";
 
 function Sessions() {
   const [date, setDate] = useState(new Date());
@@ -54,13 +54,18 @@ function Sessions() {
     return highlightedDates.includes(formatedDateCalendar);
   };
 
-  //spesify className
-  const tileContent = ({ date, view }) => {
-    const baseClasses =
-      "react-calendar__tile react-calendar__month-view__days__day";
-    const additionalClasses = isDateHighlighted(date) ? "highlighted-tile" : "";
 
-    return <button className={`${baseClasses} ${additionalClasses}`} />;
+
+  const tileContent = ({ date, view }) => {
+    const existingClasses =
+      "react-calendar__tile react-calendar__month-view__days__day";
+    const highlightedClass = "highlighted-tile";
+
+    const buttonClasses = classnames(existingClasses, {
+      [highlightedClass]: isDateHighlighted(date),
+    });
+
+    return <button className={buttonClasses} />;
   };
 
 
