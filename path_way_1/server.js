@@ -295,14 +295,11 @@ WHERE day IN (
     LEFT JOIN bookings AS b ON s.id = b.sessions_id
     WHERE time = 'Evening' AND b.id IS NOT NULL
 )`
-
     const result = await db.query(bookedQuery);
-    console.log(result.rows);
 res.status(200).json(result.rows);
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });
   }
-
 }) 
 
 

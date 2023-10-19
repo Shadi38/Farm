@@ -41,7 +41,11 @@ export default function EveningOrMorningWindow(props) {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button
+        variant="contained"
+        style={{ color: "#FC4445", backgroundColor: "white", marginLeft: 130 }}
+        onClick={handleClickOpen}
+      >
         Book session
       </Button>
       <BootstrapDialog
