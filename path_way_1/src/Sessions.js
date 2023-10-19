@@ -28,8 +28,8 @@ function Sessions() {
     async function fetchData() {
       try {
         const response = await fetch(
-          "http://localhost:3000/MorningEveningBooked"
-          //"https://pathway-project-1-server.onrender.com/MorningEveningBooked"
+          //"http://localhost:3000/MorningEveningBooked"
+          "https://pathway-project-1-server.onrender.com/MorningEveningBooked"
         );
         if (!response.ok) {
           throw new Error("Fetch failed");
@@ -51,7 +51,8 @@ function Sessions() {
   const isDateHighlighted = (date) => {
     // Convert the calendar date  to ISO
     const formatedDateCalendar = date.toISOString().split("T")[0];
-
+    console.log(formatedDateCalendar);
+    console.log(highlightedDates.includes(formatedDateCalendar));
     return highlightedDates.includes(formatedDateCalendar);
   };
 
