@@ -51,8 +51,6 @@ function Sessions() {
   const isDateHighlighted = (date) => {
     // Convert the calendar date  to ISO
     const formatedDateCalendar = date.toISOString().split("T")[0];
-    console.log(formatedDateCalendar);
-    console.log(highlightedDates.includes(formatedDateCalendar));
     return highlightedDates.includes(formatedDateCalendar);
   };
 
@@ -61,7 +59,7 @@ function Sessions() {
     if (view === "month" && isDateHighlighted(date)) {
       return (
         <button className="highlighted-tile">
-          {date.getDate()} {/* Display the date */}
+          {date}
         </button>
       );
     }
