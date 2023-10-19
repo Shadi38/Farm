@@ -297,7 +297,7 @@ WHERE day IN (
 )`
 
     const result = await db.query(bookedQuery);
-    console.log(result);
+    console.log(result.rows);
 res.status(200).json(result.rows);
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });

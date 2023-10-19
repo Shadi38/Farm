@@ -28,17 +28,18 @@ function Sessions() {
     async function fetchData() {
       try {
         const response = await fetch(
-          //"http://localhost:3000/MorningEveningBooked"
-          "https://pathway-project-1-server.onrender.com/MorningEveningBooked"
+          "http://localhost:3000/MorningEveningBooked"
+          //"https://pathway-project-1-server.onrender.com/MorningEveningBooked"
         );
         if (!response.ok) {
           throw new Error("Fetch failed");
         }
         const data = await response.json();
-        //const highlightedDates = data.map((item) => item.day.replace(/"/g, ""));
-        const highlightedDates = data.map((item) => formatDateForBackend(parseISO(item.day)));
+        const highlightedDates = data.map((item) => {
+          const date = new Date(item.day);
+          return date.toISOString().split("T")[0]; // Format as "yyyy-MM-dd"
+        });
         setHighlightedDates(highlightedDates);
-
         console.log(highlightedDates);
       } catch (error) {
         console.error("Error fetching data", error);
@@ -49,7 +50,7 @@ function Sessions() {
   //checking the date is i our highlightedDates array(days will have red background)
   const isDateHighlighted = (date) => {
     // Convert the calendar date  to ISO
-    const formatedDateCalendar = date.toISOString();
+    const formatedDateCalendar = date.toISOString().split("T")[0];
 
     return highlightedDates.includes(formatedDateCalendar);
   };
