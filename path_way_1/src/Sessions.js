@@ -59,7 +59,6 @@ function Sessions() {
     if (view === "month" && isDateHighlighted(date)) {
       return (
         <button className="highlighted-tile">
-          {date}
         </button>
       );
     }
