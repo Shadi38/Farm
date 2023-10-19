@@ -59,7 +59,11 @@ function Sessions() {
   //spesify className
   const tileContent = ({ date, view }) => {
     if (view === "month" && isDateHighlighted(date)) {
-      return <div className="highlighted-tile"></div>;
+      return (
+        <button className="highlighted-tile">
+          {date.getDate()} {/* Display the date */}
+        </button>
+      );
     }
 
     return null;
