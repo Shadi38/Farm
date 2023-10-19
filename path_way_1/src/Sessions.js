@@ -58,8 +58,9 @@ function Sessions() {
   const tileContent = ({ date, view }) => {
     if (view === "month" && isDateHighlighted(date)) {
       return (
-        <div className="highlighted-tile">
-        </div>
+        <button
+          className={`react-calendar__tile react-calendar__month-view__days__day highlighted-tile`}
+        />
       );
     }
 
