@@ -56,16 +56,13 @@ function Sessions() {
 
   //spesify className
   const tileContent = ({ date, view }) => {
-    if (view === "month" && isDateHighlighted(date)) {
-      return (
-        <button
-          className={`react-calendar__tile react-calendar__month-view__days__day highlighted-tile`}
-        />
-      );
-    }
+    const baseClasses =
+      "react-calendar__tile react-calendar__month-view__days__day";
+    const additionalClasses = isDateHighlighted(date) ? "highlighted-tile" : "";
 
-    return null;
+    return <button className={`${baseClasses} ${additionalClasses}`} />;
   };
+
 
   //an array of objects with time and booked propertis
   async function handleChooseTime(day) {
