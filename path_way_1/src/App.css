@@ -169,9 +169,8 @@ padding-top: 0px;
 .my-calendar .react-calendar {
   background-color: rgb(248, 230, 209);
 }
-.highlighted-tile {
-  background-color: #FF6667;
-}
+
+
 /* calender css */
 .react-calendar {
   width: 350px;
@@ -332,3 +331,9 @@ padding-top: 0px;
   background-color:  orange;
 }
 .new{}
+.react-calendar__tile{
+  background: none;
+}
+.my-calendar .highlighted-tile {
+  background-color: #FF6667;
+}

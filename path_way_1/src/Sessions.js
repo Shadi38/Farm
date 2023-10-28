@@ -1,12 +1,10 @@
-import React, { useState,useEffect,} from "react";
+import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import BookedWindow from "./BookedWindow";
 import MorningEveningWindow from "./MorningEveningwindow";
-import { format} from "date-fns";
+import { format } from "date-fns";
 import EveningOrMorningWindow from "./EveningOrMorningWindow";
 import "react-calendar/dist/Calendar.css";
-
-  
 
 function Sessions() {
   const [date, setDate] = useState(new Date());
@@ -51,16 +49,16 @@ function Sessions() {
   //checking the date is i our highlightedDates array(days will have red background)
   const isDateHighlighted = (date) => {
     // Convert the calendar date  to ISO
+    
     const formatedDateCalendar = date.toISOString().split("T")[0];
+    console.log(formatedDateCalendar);
     return highlightedDates.includes(formatedDateCalendar);
   };
   // Custom tile content for the calendar
   const tileContent = ({ date, view }) => {
+    console.log(date);
     if (view === "month" && isDateHighlighted(date)) {
-      return (
-        <button className="highlighted-tile" style={{ backgroundColor: "red" }}> 
-        </button>
-      );
+      return "highlighted-tile";
     }
     return null;
   };
@@ -74,7 +72,7 @@ function Sessions() {
       const response = await fetch(
         `https://pathway-project-1-server.onrender.com/sessions/time/${formattedDate}`
       );
-      
+
       if (!response.ok) {
         throw new Error("Fetch failed ");
       }
@@ -92,7 +90,7 @@ function Sessions() {
       console.error("Error fetching data");
     }
   }
-  
+
   let sessionWindow = null;
   if ((firstBookedStatus && secondBookedStatus) === true) {
     sessionWindow = <BookedWindow />;
@@ -144,7 +142,7 @@ function Sessions() {
             onClickDay={(value) => {
               handleChooseTime(value);
             }}
-            tileContent={tileContent}
+            tileClassName={tileContent}
           />
         </div>
       </div>

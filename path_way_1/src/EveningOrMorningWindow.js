@@ -68,8 +68,12 @@ export default function EveningOrMorningWindow(props) {
         >
           <CloseIcon />
         </IconButton>
-        <DialogContent dividers>
-          {/* <Typography gutterBottom>Morning session is available</Typography> */}
+        <DialogContent
+          dividers
+          sx={{
+            padding: 0,
+          }}
+        >
           <Typography gutterBottom>
             {morningText ? "Morning" : "Evening"} session is available
           </Typography>

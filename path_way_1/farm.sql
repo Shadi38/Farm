@@ -1,83 +1,82 @@
 CREATE TABLE sessions (
     id SERIAL PRIMARY KEY,
     Day Date NOT NULL,
-    Time VARCHAR(255) NOT NULL,
-    Booked BOOLEAN
+    Time VARCHAR(255) NOT NULL
 );
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 01, 2023','Morning',true);
+INSERT INTO sessions (Day, Time)
+VALUES ( '2023-10-01','Morning');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 01, 2023','Evening',true);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-01','Evening');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 02, 2023','Morning',true);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-02','Morning');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 02, 2023','Evening',false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-02','Evening');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 03, 2023','Morning',false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-03','Morning');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 03, 2023','Evening',false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-03','Evening');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 04, 2023','Morning',false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-04','Morning');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 04, 2023','Evening',false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-04','Evening');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 05, 2023','Morning',false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-05','Morning');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 05, 2023','Evening',false);
-
-
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 06, 2023','Morning',false);
-
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 06, 2023','Evening', false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-05','Evening');
 
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 07, 2023','Morning',false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-06','Morning');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 07, 2023','Evening', false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-06','Evening');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 08, 2023','Morning', false);
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 08, 2023','Evening', false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-07','Morning');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 09, 2023','Morning', false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-07','Evening');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 09, 2023','Evening', false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-08','Morning');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 10, 2023','Morning', false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-08','Evening');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 10, 2023','Evening', false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-09','Morning');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 11, 2023','Morning', false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-09','Evening');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 11, 2023','Evening', false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-10','Morning');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 12, 2023','Morning', false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-10','Evening');
 
-INSERT INTO sessions (Day, Time, Booked)
-VALUES ('Oct 12, 2023','Evening', false);
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-11','Morning');
+
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-11','Evening');
+
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-12','Morning');
+
+INSERT INTO sessions (Day, Time)
+VALUES ('2023-10-12','Evening');
 
 CREATE TABLE volunteers (
     id SERIAL PRIMARY KEY,
