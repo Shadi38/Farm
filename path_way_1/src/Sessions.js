@@ -5,6 +5,7 @@ import MorningEveningWindow from "./MorningEveningwindow";
 import { format } from "date-fns";
 import EveningOrMorningWindow from "./EveningOrMorningWindow";
 import "react-calendar/dist/Calendar.css";
+import dayjs from 'dayjs'
 
 function Sessions() {
   const [date, setDate] = useState(new Date());
@@ -50,13 +51,14 @@ function Sessions() {
   const isDateHighlighted = (date) => {
     // Convert the calendar date  to ISO
     
-    const formatedDateCalendar = date.toISOString().split("T")[0];
-    console.log(formatedDateCalendar);
+    const formatedDateCalendar = dayjs(date).format("YYYY-MM-DD")
+    // console.log(formatedDateCalendar);
     return highlightedDates.includes(formatedDateCalendar);
   };
   // Custom tile content for the calendar
   const tileContent = ({ date, view }) => {
     console.log(date);
+    console.log(dayjs(date).format("YYYY-MM-DD"))
     if (view === "month" && isDateHighlighted(date)) {
       return "highlighted-tile";
     }

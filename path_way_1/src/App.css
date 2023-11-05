@@ -336,4 +336,5 @@ padding-top: 0px;
 }
 .my-calendar .highlighted-tile {
   background-color: #FF6667;
+  margin : 21px;
 }
