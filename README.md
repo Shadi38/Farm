@@ -12,6 +12,6 @@ As a volunteer, I need to be able to see what sessions I have signed up for;
 As a volunteer, I need to be able to claim an available session;
 As a volunteer, I need to be able to cancel a session I have already signed up for.
 
-Front-End: [Front-End Link](https://pathway-project-1.onrender.com/Sessions)
+Front-End: [https://pathway-project-1.onrender.com/Sessions Link](https://pathway-project-1.onrender.com/Sessions)
 
-Back-End: [Back-End Link](https://pathway-project-1-server.onrender.com)
+Back-End: [https://pathway-project-1-server.onrender.com Link](https://pathway-project-1-server.onrender.com)
